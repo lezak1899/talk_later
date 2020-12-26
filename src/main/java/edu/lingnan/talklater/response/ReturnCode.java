@@ -1,4 +1,4 @@
-package edu.lingnan.response;
+package edu.lingnan.talklater.response;
 
 /**
  * Description:

@@ -1,4 +1,4 @@
-package edu.lingnan.netty;
+package edu.lingnan.talklater.netty;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

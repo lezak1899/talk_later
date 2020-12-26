@@ -18,6 +18,7 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     <spring.version>5.2.2.RELEASE</spring.version>
+    <spring.boot.swagger.version>1.9.0.RELEASE</spring.boot.swagger.version>
   </properties>
 
   <dependencies>
@@ -41,6 +42,17 @@
       <version>2.3.7.RELEASE</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-parent</artifactId>
+      <version>2.3.7.RELEASE</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+
+
+
+
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -55,12 +67,7 @@
       <version>2.3.7.RELEASE</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
-    <dependency>
-      <groupId>org.mybatis.spring.boot</groupId>
-      <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>2.1.2</version>
-    </dependency>
+
 
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
@@ -83,6 +90,7 @@
       <version>1.7.25</version>
     </dependency>
 
+<!--    swagger 版本冲突，使用这个依赖会报错-->
 <!--    <dependency>-->
 <!--      <groupId>io.springfox</groupId>-->
 <!--      <artifactId>springfox-swagger2</artifactId>-->
@@ -94,6 +102,16 @@
 <!--      <version>2.4.0</version>-->
 <!--    </dependency>-->
 <!--    -->
+
+<!--    swagger-->
+    <dependency>
+      <groupId>com.spring4all</groupId>
+      <artifactId>swagger-spring-boot-starter</artifactId>
+      <version>${spring.boot.swagger.version}</version>
+    </dependency>
+
+
+
 
 
 

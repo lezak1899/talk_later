@@ -1,4 +1,4 @@
-package edu.lingnan.response;
+package edu.lingnan.talklater.response;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

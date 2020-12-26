@@ -1,4 +1,4 @@
-package edu.lingnan.netty;
+package edu.lingnan.talklater.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

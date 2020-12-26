@@ -1,4 +1,4 @@
-package edu.lingnan.netty;
+package edu.lingnan.talklater.netty;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
