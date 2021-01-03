@@ -2,8 +2,6 @@ package edu.lingnan.talklater.modules.user.service;
 
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 
-import java.util.List;
-
 /**
  * Description:
  * date: 2020/12/27 20:14
@@ -13,11 +11,21 @@ import java.util.List;
  */
 public interface UserXxService {
 
+
+
     /**
-     * @description:返回所有用户信息
+     * @description:用户名是否存在
      * @author: likunzhu
      * @date:
      */
-    public List<UserXx> findAll();
+    public Boolean isExist(UserXx userXx);
+
+    /**
+     * @description:
+     * @author: likunzhu
+     * @date:
+     * @return
+     */
+    public UserXx queryOne(UserXx userXx);
 
 }

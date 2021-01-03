@@ -1,13 +1,13 @@
 package edu.lingnan.talklater.modules.user.service.impl;
 
+import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import edu.lingnan.talklater.modules.user.domain.UserXx;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 /**
  * Description:
@@ -23,9 +23,23 @@ public class UserXxServiceImpl implements UserXxService {
     private UserXxRepository userXxRepository;
 
 
-    @Override
-    public List<UserXx> findAll() {
-        return userXxRepository.findAllUser();
 
+    @Override
+    public Boolean isExist(UserXx userXx) {
+        if(userXx==null) return false;
+        Example example = Example.of(userXx);
+        Optional<UserXx> userXxOptional = userXxRepository.findOne(example);
+
+        return userXxOptional.isPresent();
+    }
+
+    @Override
+    public UserXx queryOne(UserXx userXx) {
+        Example example = Example.of(userXx);
+        Optional<UserXx> userXxOptional = userXxRepository.findOne(example);
+        if(userXxOptional.isPresent()){
+            return userXxOptional.get();
+        }
+        return null;
     }
 }

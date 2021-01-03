@@ -10,9 +10,14 @@ package edu.lingnan.talklater.response;
 public enum ReturnCode {
 
     /**
-     * 请求成功
+     * 登录账号不存在！
      */
     USER_NOTFOUND(11, "登录账号不存在！"),
+
+    /**
+     * 密码错误！
+     */
+    USER_PASSWOED_ERROR(12, "密码错误！"),
 
     /**
      * 请求成功

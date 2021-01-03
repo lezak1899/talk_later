@@ -5,17 +5,17 @@
  */
 package edu.lingnan.talklater.modules.user.domain.dto.request;
 
-import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
+
 /**
- * 修改UserXx请求dto类
+ * 查询UserXx请求dto类
  * @author likunzhu
  */
-@ApiModel(value = "UpdateUserXxRequestDTO", description = "修改UserXx请求dto类")
-public class UpdateUserXxRequestDTO implements Serializable {
+@ApiModel(value = "UserXxRequestDTO", description = "查询UserXx请求dto类")
+public class UserXxRequestDTO implements Serializable {
     
     @ApiModelProperty(value = "主键")
     private String id;
