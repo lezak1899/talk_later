@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -45,6 +46,14 @@ public class UserXxServiceImpl implements UserXxService {
 
     @Override
     public Boolean register(UserXx userXx) {
-        return null;
+
+        //设置系统字段
+        userXx.setUsertype("1");//1为普通用户，2为管理员
+        userXx.setValid(true);
+        userXx.setCreatedDate(System.currentTimeMillis());
+
+        UserXx returnUsesr= userXxRepository.save(userXx);
+        if(returnUsesr==null) return false;
+        return true;
     }
 }

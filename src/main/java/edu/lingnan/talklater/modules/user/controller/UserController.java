@@ -65,15 +65,12 @@ public class UserController {
     })
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ApiResponse register(@RequestBody UserXxRequestDTO userXxRequestDTO){
-
         Map result = new HashMap();
         UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
-
-
-
-
-
-
-        return ApiResponse.success(result);
+        boolean flag = userXxService.register(userXx);
+        if(!flag){
+            return ApiResponse.fail();
+        }
+        return ApiResponse.success();
     }
 }

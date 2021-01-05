@@ -119,6 +119,18 @@ public class UserXx  implements Serializable {
     private Boolean valid;
 
     /**
+     * 新增时间
+     */
+    @Column(name = "created_date")
+    private Long createdDate;
+
+    /**
+     * 修改时间
+     */
+    @Column(name = "modified_date")
+    private Long modified_date;
+
+    /**
      * 删除时间
      */
     @Column(name = "deleted_date")
@@ -346,6 +358,22 @@ public class UserXx  implements Serializable {
      */
     public Boolean getValid() {
         return this.valid;
+    }
+
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getModified_date() {
+        return modified_date;
+    }
+
+    public void setModified_date(Long modified_date) {
+        this.modified_date = modified_date;
     }
 
     /**
