@@ -28,4 +28,13 @@ public interface UserXxService {
      */
     public UserXx queryOne(UserXx userXx);
 
+
+    /**
+     * @description:注册
+     * @author: likunzhu
+     * @date:
+     * @return
+     */
+    public Boolean register(UserXx userXx);
+
 }

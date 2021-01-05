@@ -42,4 +42,9 @@ public class UserXxServiceImpl implements UserXxService {
         }
         return null;
     }
+
+    @Override
+    public Boolean register(UserXx userXx) {
+        return null;
+    }
 }
