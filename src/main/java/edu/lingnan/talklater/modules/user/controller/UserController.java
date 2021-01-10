@@ -2,6 +2,8 @@ package edu.lingnan.talklater.modules.user.controller;
 
 
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.request.UserXxRequestDTO;
+import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
 import edu.lingnan.talklater.response.ApiResponse;
 import edu.lingnan.talklater.response.ReturnCode;
@@ -10,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +33,6 @@ public class UserController {
 
     @Autowired
     private UserXxService userXxService;
-
-
-
 
     @ApiOperation(value = "登陆接口")
     @ApiResponses(value = {
@@ -59,6 +55,22 @@ public class UserController {
 
         if(currentUser==null) return ApiResponse.fail(ReturnCode.USER_PASSWOED_ERROR.getCode(),ReturnCode.USER_PASSWOED_ERROR.getMsg());
         result.put("data",currentUser);
+
         return ApiResponse.success(result);
+    }
+
+    @ApiOperation(value = "注册接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    public ApiResponse register(@RequestBody UserXxRequestDTO userXxRequestDTO){
+        Map result = new HashMap();
+        UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
+        boolean flag = userXxService.register(userXx);
+        if(!flag){
+            return ApiResponse.fail();
+        }
+        return ApiResponse.success();
     }
 }
