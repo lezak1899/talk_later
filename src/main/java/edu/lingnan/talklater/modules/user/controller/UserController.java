@@ -40,7 +40,10 @@ public class UserController {
             @io.swagger.annotations.ApiResponse(code = 11, message = "登录账号不存在！"),
     })
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public ApiResponse login(@RequestParam("username") String username,@RequestParam("password") String password){
+//    public ApiResponse login(@RequestParam("username") String username,@RequestParam("password") String password){
+    public ApiResponse login(@RequestBody UserXxRequestDTO userXxRequestDTO){
+        String username = userXxRequestDTO.getUsername();
+        String  password = userXxRequestDTO.getPassword();
 
         Map result = new HashMap();
         //当前登录用户

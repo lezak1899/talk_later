@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 /**
  * Description:
  * date: 2020/12/20 15:12
@@ -40,13 +38,12 @@ public class InfoController {
 
     @ApiOperation(value = "测试", notes = "返回一些测试信息", produces = "text/plain;charset=UTF-8")
     @GetMapping("/test")
-    public Map info(){
+    public String info(){
 
-        Map<String,Object> result =infoService.test();
 
         log.error("logger--error-- 测试输出点什么！");
         log.warn("logger--warn-- 测试输出点什么！");
 
-        return result;
+        return "test!";
     }
 }
