@@ -30,7 +30,6 @@ public class UserXxServiceImpl implements UserXxService {
         if(userXx==null) return false;
         Example example = Example.of(userXx);
         Optional<UserXx> userXxOptional = userXxRepository.findOne(example);
-
         return userXxOptional.isPresent();
     }
 

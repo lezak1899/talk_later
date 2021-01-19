@@ -57,7 +57,7 @@ public class UserController {
         currentUser= userXxService.queryOne(userXx);
 
         if(currentUser==null) return ApiResponse.fail(ReturnCode.USER_PASSWOED_ERROR.getCode(),ReturnCode.USER_PASSWOED_ERROR.getMsg());
-        result.put("data",currentUser);
+        result.put("currentUser",currentUser);
 
         return ApiResponse.success(result);
     }

@@ -1,0 +1,1 @@
+alter table u_user_xx change  column `nicename` `nickname` varchar(50) DEFAULT NULL COMMENT '昵称';

@@ -43,7 +43,7 @@ public final class UserXxMapper {
         userXx.setPhone(queryUserXxRequestDTO.getPhone());
         userXx.setFaceImg(queryUserXxRequestDTO.getFaceImg());
         userXx.setFaceImgWhole(queryUserXxRequestDTO.getFaceImgWhole());
-        userXx.setNicename(queryUserXxRequestDTO.getNicename());
+        userXx.setNickname(queryUserXxRequestDTO.getNickname());
         userXx.setQrcode(queryUserXxRequestDTO.getQrcode());
         userXx.setPlusId(queryUserXxRequestDTO.getPlusId());
         userXx.setFunSignature(queryUserXxRequestDTO.getFunSignature());

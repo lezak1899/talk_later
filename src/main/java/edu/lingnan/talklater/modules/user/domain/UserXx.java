@@ -73,8 +73,8 @@ public class UserXx  implements Serializable {
     /**
      * 昵称
      */
-    @Column(name = "nicename")
-    private String nicename;
+    @Column(name = "nickname")
+    private String nickname;
 
     /**
      * 二维码
@@ -249,17 +249,17 @@ public class UserXx  implements Serializable {
     }
 
     /**
-     * @param nicename the nicename to set
+     * @param nickname the nickname to set
      */
-    public void setNicename(String nicename) {
-        this.nicename = nicename;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     /**
-     * @return the nicename
+     * @return the nickname
      */
-    public String getNicename() {
-        return this.nicename;
+    public String getNickname() {
+        return this.nickname;
     }
 
     /**
@@ -403,7 +403,7 @@ public class UserXx  implements Serializable {
                 Objects.equals(phone, userXx.phone) &&
                 Objects.equals(faceImg, userXx.faceImg) &&
                 Objects.equals(faceImgWhole, userXx.faceImgWhole) &&
-                Objects.equals(nicename, userXx.nicename) &&
+                Objects.equals(nickname, userXx.nickname) &&
                 Objects.equals(qrcode, userXx.qrcode) &&
                 Objects.equals(plusId, userXx.plusId) &&
                 Objects.equals(funSignature, userXx.funSignature) &&
@@ -416,7 +416,7 @@ public class UserXx  implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, usertype, username, sex, password, phone, faceImg, faceImgWhole, nicename, qrcode, plusId, funSignature, lastLoginDate, lastLoginLocation, lastLoginEquipment, valid, deletedDate);
+        return Objects.hash(id, usertype, username, sex, password, phone, faceImg, faceImgWhole, nickname, qrcode, plusId, funSignature, lastLoginDate, lastLoginLocation, lastLoginEquipment, valid, deletedDate);
     }
 }
 

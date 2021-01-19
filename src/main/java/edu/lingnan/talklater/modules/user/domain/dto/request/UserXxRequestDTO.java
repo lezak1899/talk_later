@@ -66,7 +66,7 @@ public class UserXxRequestDTO implements Serializable {
      * 昵称
      */
     @ApiModelProperty(value = "昵称")
-    private String nicename;
+    private String nickname;
 
     /**
      * 二维码
@@ -229,17 +229,17 @@ public class UserXxRequestDTO implements Serializable {
     }
 
     /**
-     * @param nicename the nicename to set
+     * @param nickname the nickname to set
      */
-    public void setNicename(String nicename) {
-        this.nicename = nicename;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     /**
-     * @return the nicename
+     * @return the nickname
      */
-    public String getNicename() {
-        return this.nicename;
+    public String getNickname() {
+        return this.nickname;
     }
 
     /**
