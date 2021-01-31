@@ -17,8 +17,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <spring.version>5.2.2.RELEASE</spring.version>
     <spring.boot.swagger.version>1.9.0.RELEASE</spring.boot.swagger.version>
+    <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
   </properties>
 
   <dependencies>
@@ -39,13 +39,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jdbc</artifactId>
-      <version>2.3.7.RELEASE</version>
+      <version>${spring.boot.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
-      <version>2.3.7.RELEASE</version>
+      <version>${spring.boot.version}</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -57,14 +57,14 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
-      <version>2.3.7.RELEASE</version>
+      <version>${spring.boot.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>2.3.7.RELEASE</version>
+      <version>${spring.boot.version}</version>
     </dependency>
 
 
@@ -114,24 +114,29 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>2.3.7.RELEASE</version>
+      <version>${spring.boot.version}</version>
     </dependency>
 
 <!--    <dependency>-->
-<!--      <groupId>org.hibernate</groupId>-->
-<!--      <artifactId>hibernate-validator</artifactId>-->
-<!--      <version>4.2.0.Final</version>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-security</artifactId>-->
+<!--      <version>${spring.boot.version}</version>-->
 <!--    </dependency>-->
 
+    <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 <!--    <dependency>-->
-<!--      <groupId>org.hibernate</groupId>-->
-<!--      <artifactId>hibernate-core</artifactId>-->
-<!--      <version>4.2.0.Final</version>-->
+<!--      <groupId>io.jsonwebtoken</groupId>-->
+<!--      <artifactId>jjwt</artifactId>-->
+<!--      <version>0.9.1</version>-->
 <!--    </dependency>-->
 
-
-
-
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/cn.hutool/hutool-all &ndash;&gt;-->
+<!--    &lt;!&ndash;    Hutool是一个小而全的Java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率，&ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>cn.hutool</groupId>-->
+<!--      <artifactId>hutool-all</artifactId>-->
+<!--      <version>5.4.1</version>-->
+<!--    </dependency>-->
 
 
 

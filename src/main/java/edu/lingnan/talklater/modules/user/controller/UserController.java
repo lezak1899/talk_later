@@ -7,6 +7,7 @@ import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
 import edu.lingnan.talklater.response.ApiResponse;
 import edu.lingnan.talklater.response.ReturnCode;
+import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
@@ -40,7 +41,6 @@ public class UserController {
             @io.swagger.annotations.ApiResponse(code = 11, message = "登录账号不存在！"),
     })
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-//    public ApiResponse login(@RequestParam("username") String username,@RequestParam("password") String password){
     public ApiResponse login(@RequestBody UserXxRequestDTO userXxRequestDTO){
         String username = userXxRequestDTO.getUsername();
         String  password = userXxRequestDTO.getPassword();
@@ -62,13 +62,26 @@ public class UserController {
         return ApiResponse.success(result);
     }
 
+    @ApiOperation(value = "修改用户信息接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/modify/{zdmc}")
+    public ApiResponse modifyUserXx(@RequestBody UserXxRequestDTO userXxRequestDTO ,@PathVariable String zdmc){
+        if(StringUtil.isNullOrEmpty(zdmc)||userXxRequestDTO==null)  return ApiResponse.fail();
+
+        UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
+
+
+
+    }
+
     @ApiOperation(value = "注册接口")
     @ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
     })
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ApiResponse register(@RequestBody UserXxRequestDTO userXxRequestDTO){
-        Map result = new HashMap();
         UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
         boolean flag = userXxService.register(userXx);
         if(!flag){

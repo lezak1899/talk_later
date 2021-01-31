@@ -1,6 +1,6 @@
 #数据接口
 server:
-  port: 8080
+  port: 8088
 
 # netty接口
 netty:

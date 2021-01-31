@@ -37,4 +37,7 @@ public interface UserXxService {
      */
     public Boolean register(UserXx userXx);
 
+
+    public Boolean  modifyUserXx (UserXx userXx,String zdmc);
+
 }
