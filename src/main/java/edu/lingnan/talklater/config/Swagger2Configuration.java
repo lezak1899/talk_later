@@ -34,8 +34,8 @@ public class Swagger2Configuration {
 
     private ApiInfo buildApiInf(){
         return new ApiInfoBuilder()
-                .title("附件服务API")
-                .description("用于描述附件服务API详细信息")
+                .title("回聊服务API")
+                .description("用于描述回聊服务API详细信息")
                 .build();
 
     }

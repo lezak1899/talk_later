@@ -22,7 +22,7 @@ public enum ReturnCode {
     /**
      * 请求成功
      */
-    SUCCESS(0, "SUCCESS"),
+    SUCCESS(200, "SUCCESS"),
     /**
      * 请求失败
      */

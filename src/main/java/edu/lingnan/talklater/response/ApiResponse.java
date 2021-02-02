@@ -20,7 +20,7 @@ import java.util.Map;
 public class ApiResponse  implements Serializable {
 
 
-    /**响应编码：0成功；-1系统异常；*/
+    /**响应编码：200成功；-1系统异常；*/
     private int code;
 
     /**响应结果描述*/

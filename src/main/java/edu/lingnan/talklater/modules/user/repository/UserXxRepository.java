@@ -23,4 +23,5 @@ public interface UserXxRepository extends JpaRepository<UserXx, String>,JpaSpeci
     @Query(" select u from UserXx u")
     List<UserXx> findAllUser();
 
+
 }

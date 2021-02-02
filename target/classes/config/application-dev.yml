@@ -20,11 +20,18 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml #指定xml配置文件的位置
 
-#日志文件信息，部署上线再启用
-#logging:
-#  level:
-#    org.springframework.web: INFO
-#  config: classpath:logback-spring.xml
+aliyun:
+  oss:
+    endpoint: "oss-cn-guangzhou.aliyuncs.com"
+    accessKeyId: "LTAI4GHHHS9YKUyvqcLRCYcE"
+    accessKeySecret: "s3mPePeMcV4aU3SX1RvxHzI3ki4SsR"
+    bucketName: "talk-later-file"
+
+
+qrcode:
+  path: "qrCode/"
+
+
 
 
 

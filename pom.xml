@@ -117,7 +117,14 @@
       <version>${spring.boot.version}</version>
     </dependency>
 
-<!--    <dependency>-->
+    <!--二维码-->
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>javase</artifactId>
+      <version>3.3.3</version>
+    </dependency>
+
+    <!--    <dependency>-->
 <!--      <groupId>org.springframework.boot</groupId>-->
 <!--      <artifactId>spring-boot-starter-security</artifactId>-->
 <!--      <version>${spring.boot.version}</version>-->
@@ -137,7 +144,13 @@
 <!--      <artifactId>hutool-all</artifactId>-->
 <!--      <version>5.4.1</version>-->
 <!--    </dependency>-->
-
+  <!--阿里云oss对象存储-->
+    <dependency>
+      <groupId>com.aliyun.oss</groupId>
+      <artifactId>aliyun-sdk-oss</artifactId>
+      <version>3.8.0</version>
+    </dependency>
+    <!--阿里云oss对象存储end-->
 
 
 

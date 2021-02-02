@@ -38,6 +38,13 @@ public interface UserXxService {
     public Boolean register(UserXx userXx);
 
 
-    public Boolean  modifyUserXx (UserXx userXx,String zdmc);
+    /**
+     * @description:通过zdmc修改特定字段的值
+     * @author: likunzhu
+     * @date:
+     * @return
+     */
+    public Boolean  modifyUserXxByZdmc (UserXx userXx,String zdmc);
+
 
 }

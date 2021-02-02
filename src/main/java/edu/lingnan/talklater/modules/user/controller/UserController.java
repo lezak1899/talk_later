@@ -67,12 +67,17 @@ public class UserController {
             @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
     })
     @RequestMapping(method = RequestMethod.POST, value = "/modify/{zdmc}")
-    public ApiResponse modifyUserXx(@RequestBody UserXxRequestDTO userXxRequestDTO ,@PathVariable String zdmc){
+    public ApiResponse modifyUserXxByZdmc(@RequestBody UserXxRequestDTO userXxRequestDTO ,@PathVariable String zdmc){
         if(StringUtil.isNullOrEmpty(zdmc)||userXxRequestDTO==null)  return ApiResponse.fail();
 
+        Map result = new HashMap();
         UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
+            Boolean flag= userXxService.modifyUserXxByZdmc(userXx,zdmc);
+            if(!flag) return ApiResponse.fail();
 
-
+        UserXx currentUser= userXxService.queryOne(userXx);
+        result.put("currentUser",currentUser);
+        return ApiResponse.success(result);
 
     }
 
