@@ -88,9 +88,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ApiResponse register(@RequestBody UserXxRequestDTO userXxRequestDTO){
         UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
-        boolean flag = userXxService.register(userXx);
-        if(!flag){
-            return ApiResponse.fail();
+        int code = userXxService.register(userXx);
+        if(code!=ReturnCode.SUCCESS.getCode()){
+            return ApiResponse.fail(code,ReturnCode.getMsg(code));
         }
         return ApiResponse.success();
     }

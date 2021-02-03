@@ -35,7 +35,7 @@ public interface UserXxService {
      * @date:
      * @return
      */
-    public Boolean register(UserXx userXx);
+    public int register(UserXx userXx);
 
 
     /**

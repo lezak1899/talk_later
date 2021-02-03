@@ -143,15 +143,16 @@ public class ApiResponse  implements Serializable {
 
 
     private static Integer getResponseStatus(int failCode){
-        if(failCode ==ReturnCode.FAIL.getCode() || failCode ==ReturnCode.SYSTEM_ERROR.getCode()){
-            return HttpStatus.INTERNAL_SERVER_ERROR.value();
-        }else if(failCode == ReturnCode.FILE_NOTFOUND.getCode()){
-            return HttpStatus.BAD_REQUEST.value();
-        }else if(failCode == ReturnCode.SIGN_ERROR.getCode()){
-            return HttpStatus.UNAUTHORIZED.value();
-        }else {
-            return HttpStatus.OK.value();
-        }
+//        if(failCode ==ReturnCode.FAIL.getCode() || failCode ==ReturnCode.SYSTEM_ERROR.getCode()){
+//            return HttpStatus.INTERNAL_SERVER_ERROR.value();
+//        }else if(failCode == ReturnCode.USERNAME_HAS_BEEN_USE.getCode()){
+//            return HttpStatus.BAD_REQUEST.value();
+//        }else if(failCode == ReturnCode.SIGN_ERROR.getCode()){
+//            return HttpStatus.UNAUTHORIZED.value();
+//        }else {
+//            return HttpStatus.OK.value();
+//        }
+        return HttpStatus.OK.value();
     }
 
 

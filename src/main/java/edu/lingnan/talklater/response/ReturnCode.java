@@ -28,19 +28,20 @@ public enum ReturnCode {
      */
     FAIL(1, "请求失败"),
     /**
-     * 找不到与asid相匹配的文件
+     *该账号已经被注册
      */
-    FILE_NOTFOUND(2, "找不到与asid相匹配的文件"),
+    USERNAME_HAS_BEEN_USE(2, "该账号已经被注册"),
 
     /**
-     * 爱数账号验证失败
+     * 参数为不能空
      */
-    SIGN_ERROR(3, "爱数账号验证失败"),
+    PARAM_NULL(3, "参数为不能空"),
 
     /**
-     * 附件模块系统异常
+     * 参数格式不正确
      */
-    SYSTEM_ERROR(4, "附件模块系统异常");
+    PARAM_format_ERROR(4, "参数格式不正确");
+
 
 
 
@@ -61,6 +62,25 @@ public enum ReturnCode {
 
     public String getMsg() {
         return msg;
+    }
+
+    public static String getMsg(int code){
+        switch (code) {
+            case 1:
+                return "请求失败";
+            case 2:
+                return "该账号已经被注册";
+            case 3:
+                return "参数为不能空";
+            case 4:
+                return "参数格式不正确";
+            case 11:
+                return "登录账号不存在！";
+            case 12:
+                return "密码错误！";
+            default:
+                return null;
+        }
     }
 
 

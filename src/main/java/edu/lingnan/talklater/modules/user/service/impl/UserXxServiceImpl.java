@@ -1,11 +1,14 @@
 package edu.lingnan.talklater.modules.user.service.impl;
 
+import com.google.common.base.Verify;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
+import edu.lingnan.talklater.response.ReturnCode;
 import edu.lingnan.talklater.utils.FileUtil;
 import edu.lingnan.talklater.utils.QRCodeUtil;
 import io.netty.util.internal.StringUtil;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Types;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -51,8 +55,8 @@ public class UserXxServiceImpl implements UserXxService {
     public Boolean isExist(UserXx userXx) {
         if(userXx==null) return false;
         Example example = Example.of(userXx);
-        Optional<UserXx> userXxOptional = userXxRepository.findOne(example);
-        return userXxOptional.isPresent();
+        List<UserXx> userXxOptional = userXxRepository.findAll(example);
+        return !userXxOptional.isEmpty();
     }
 
     @Override
@@ -65,31 +69,37 @@ public class UserXxServiceImpl implements UserXxService {
         return null;
     }
 
+    public void test() {
+
+    }
+
+
+
     @Override
-    public Boolean register(UserXx userXx) {
+    public int register(UserXx userXx) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        if(userXx == null) return false;
+        if(userXx == null) return ReturnCode.PARAM_NULL.getCode();
 
+        UserXx verifyUserXx=new UserXx();
+        verifyUserXx.setUsername(userXx.getUsername());
+        if(isExist(verifyUserXx)) return ReturnCode.USERNAME_HAS_BEEN_USE.getCode();
 
         //设置系统字段
         userXx.setUsertype("1");//1为普通用户，2为管理员
         userXx.setValid(true);
         userXx.setCreatedDate(System.currentTimeMillis());
 
-        //生成二维码图片流
-        qrCodeUtil.createQRCodeToOutputStream(byteArrayOutputStream,userXx.getUsername());
 
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
 
         //将二维码图片上传到服务器，将访问路径保存到数据库中
         String path= fileUtil.uploadOutputStream(returnUsesr.getId()+"_qrcode.png",byteArrayOutputStream);//上传到服务器
-        returnUsesr.setQrcode(path);
-        userXxRepository.save(returnUsesr);
+        StringBuffer sql=new StringBuffer(" update u_user_xx set qrcode = ? where id = ?");
+        jdbcTemplate.update(sql.toString(),new Object[]{path,returnUsesr.getId()},new int[]{Types.VARCHAR,Types.VARCHAR});
 
 
-        if(returnUsesr==null) return false;
-        return true;
+        return ReturnCode.SUCCESS.getCode();
     }
 
 

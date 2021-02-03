@@ -15,7 +15,6 @@ import java.util.Objects;
 
 
 /**
- * UserXx领域模型类
  * @author likunzhu
  */
 @Entity
