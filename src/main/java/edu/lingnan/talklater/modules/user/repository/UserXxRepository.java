@@ -27,7 +27,4 @@ public interface UserXxRepository extends JpaRepository<UserXx, String>,JpaSpeci
     @Query(" select u from UserXx u where u.username = ?1 and u.password = ?2")
     List<UserXx> queryByUsernameAndPassword(String username,String password);
 
-
-
-
 }

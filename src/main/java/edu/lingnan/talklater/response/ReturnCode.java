@@ -40,7 +40,30 @@ public enum ReturnCode {
     /**
      * 参数格式不正确
      */
-    PARAM_format_ERROR(4, "参数格式不正确");
+    PARAM_FORMAT_ERROR(4, "参数格式不正确"),
+
+    /**
+     * 不能添加自己为好友
+     */
+    IS_YOURSELF(5, "不能添加自己为好友"),
+
+    /**
+     * Ta已经是您的好友了
+     */
+    FRIEND_ALREADY(6, "Ta已经是您的好友了"),
+
+    /**
+     * 好友账号不能为空
+     */
+    FRIEND_USERNAME_NULL(7, "好友账号不能为空"),
+
+    /**
+     * 查询不到该用户
+     */
+    FRIEDN_NOTFOUND(8, "查询不到该用户");
+
+
+
 
 
 
@@ -74,6 +97,14 @@ public enum ReturnCode {
                 return "参数为不能空";
             case 4:
                 return "参数格式不正确";
+            case 5:
+                return "不能添加自己为好友";
+            case 6:
+                return "不能重复添加";
+            case 7:
+                return "好友账号不能为空";
+            case 8:
+                return "查询不到该用户";
             case 11:
                 return "登录账号不存在！";
             case 12:

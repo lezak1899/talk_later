@@ -26,7 +26,7 @@ import java.util.Map;
  * since JDK 1.8
  */
 
-@Api(value="服务器信息模块",tags={"用于返回服务器的一些信息"})
+@Api(value="用户信息模块",tags={"提供用户数据接口"})
 @RestController
 @Slf4j
 @RequestMapping("/user")
@@ -95,4 +95,32 @@ public class UserController {
         }
         return ApiResponse.success();
     }
+
+
+    /**
+     * 查询好友
+     */
+    @ApiOperation(value = "搜索接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public ApiResponse search(@RequestParam String friendUsername){
+
+        UserXx userXx = new UserXx();
+        userXx.setUsername(friendUsername);
+
+        UserXx returnUserXx = userXxService.queryOne(userXx);
+
+        if(returnUserXx==null) return ApiResponse.fail(ReturnCode.FRIEDN_NOTFOUND);
+
+        Map result = new HashMap();
+        result.put("username",returnUserXx.getUsername());
+        result.put("nickname",returnUserXx.getNickname());
+        result.put("faceImg",returnUserXx.getFaceImg());
+        result.put("FunSignature",returnUserXx.getFunSignature());
+
+        return ApiResponse.success(result);
+    }
+
 }
