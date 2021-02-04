@@ -21,12 +21,27 @@ public interface UserXxService {
     public Boolean isExist(UserXx userXx);
 
     /**
+     * @description:用户名是否存在
+     * @author: likunzhu
+     * @date:
+     */
+    public Boolean isExistByUsername(String username);
+
+    /**
      * @description:
      * @author: likunzhu
      * @date:
      * @return
      */
     public UserXx queryOne(UserXx userXx);
+
+    /**
+     * @description:
+     * @author: likunzhu
+     * @date:
+     * @return
+     */
+    public UserXx login(UserXx userXx);
 
 
     /**

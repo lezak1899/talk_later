@@ -1,6 +1,5 @@
 package edu.lingnan.talklater.modules.user.service.impl;
 
-import com.google.common.base.Verify;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
@@ -8,18 +7,16 @@ import edu.lingnan.talklater.response.ReturnCode;
 import edu.lingnan.talklater.utils.FileUtil;
 import edu.lingnan.talklater.utils.QRCodeUtil;
 import io.netty.util.internal.StringUtil;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.io.ByteArrayOutputStream;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +57,16 @@ public class UserXxServiceImpl implements UserXxService {
     }
 
     @Override
+    public Boolean isExistByUsername(String username) {
+        if(StringUtil.isNullOrEmpty(username)) return false;
+
+        StringBuffer sql = new StringBuffer(" select username from u_user_xx where username = ?");
+        List<String> res = jdbcTemplate.query(sql.toString(),new Object[]{username},new int[]{Types.VARCHAR},new BeanPropertyRowMapper(String.class));
+
+        return !res.isEmpty();
+    }
+
+    @Override
     public UserXx queryOne(UserXx userXx) {
         Example example = Example.of(userXx);
         Optional<UserXx> userXxOptional = userXxRepository.findOne(example);
@@ -69,9 +76,24 @@ public class UserXxServiceImpl implements UserXxService {
         return null;
     }
 
-    public void test() {
+    @Override
+    public UserXx login(UserXx userXx) {
+        if(userXx==null) return null;
 
+        if(StringUtil.isNullOrEmpty(userXx.getLastLoginEquipment())) userXx.setLastLoginEquipment("unknown");
+
+        List<UserXx> users= userXxRepository.queryByUsernameAndPassword(userXx.getUsername(),userXx.getPassword());
+        UserXx currentUser = users.get(0);
+
+        currentUser.setLastLoginEquipment(userXx.getLastLoginEquipment());
+        currentUser.setLastLoginDate(System.currentTimeMillis());
+
+        StringBuffer sql = new StringBuffer(" update u_user_xx set last_login_date = ? , last_login_equipment = ? where id = ?");
+        jdbcTemplate.update(sql.toString(),new Object[]{System.currentTimeMillis(),userXx.getLastLoginEquipment(), currentUser.getId()},new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});
+
+        return currentUser;
     }
+
 
 
 
@@ -89,15 +111,20 @@ public class UserXxServiceImpl implements UserXxService {
         userXx.setUsertype("1");//1为普通用户，2为管理员
         userXx.setValid(true);
         userXx.setCreatedDate(System.currentTimeMillis());
-
-
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
 
-        //将二维码图片上传到服务器，将访问路径保存到数据库中
+        //生成二维码文件流
+        qrCodeUtil.createQRCodeToOutputStream(byteArrayOutputStream,returnUsesr.getUsername());
+        //将二维码文件流上传到服务器，将访问路径保存到数据库中
         String path= fileUtil.uploadOutputStream(returnUsesr.getId()+"_qrcode.png",byteArrayOutputStream);//上传到服务器
-        StringBuffer sql=new StringBuffer(" update u_user_xx set qrcode = ? where id = ?");
-        jdbcTemplate.update(sql.toString(),new Object[]{path,returnUsesr.getId()},new int[]{Types.VARCHAR,Types.VARCHAR});
+        System.out.println(returnUsesr.getId()+":1111111111111111111111");
+        String userId=returnUsesr.getId();
 
+//        StringBuffer sql=new StringBuffer(" update u_user_xx set qrcode = ? where id = ?");
+//        jdbcTemplate.update(sql.toString(),new Object[]{path,returnUsesr.getId()},new int[]{Types.VARCHAR,Types.VARCHAR});
+
+        returnUsesr.setQrcode(path);
+        userXxRepository.save(returnUsesr);
 
         return ReturnCode.SUCCESS.getCode();
     }

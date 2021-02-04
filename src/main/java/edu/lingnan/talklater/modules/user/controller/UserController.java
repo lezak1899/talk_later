@@ -42,20 +42,21 @@ public class UserController {
     })
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public ApiResponse login(@RequestBody UserXxRequestDTO userXxRequestDTO){
+        Map result = new HashMap();
         String username = userXxRequestDTO.getUsername();
         String  password = userXxRequestDTO.getPassword();
+        String  lastLoginEquipment = userXxRequestDTO.getLastLoginEquipment();
 
-        Map result = new HashMap();
+        //判断登录名是否存在
+        if( !userXxService.isExistByUsername(username)) return ApiResponse.fail(ReturnCode.USER_NOTFOUND.getCode(),ReturnCode.USER_NOTFOUND.getMsg());
+
         //当前登录用户
         UserXx currentUser;
         UserXx userXx = new UserXx();
         userXx.setUsername(username);
-         //判断登录名是否存在
-        if( !userXxService.isExist(userXx)) return ApiResponse.fail(ReturnCode.USER_NOTFOUND.getCode(),ReturnCode.USER_NOTFOUND.getMsg());
-
         userXx.setPassword(password);
-        currentUser= userXxService.queryOne(userXx);
-
+        userXx.setLastLoginEquipment(lastLoginEquipment);
+        currentUser= userXxService.login(userXx);
         if(currentUser==null) return ApiResponse.fail(ReturnCode.USER_PASSWOED_ERROR.getCode(),ReturnCode.USER_PASSWOED_ERROR.getMsg());
         result.put("currentUser",currentUser);
 

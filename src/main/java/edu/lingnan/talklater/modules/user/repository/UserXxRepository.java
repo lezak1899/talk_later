@@ -3,6 +3,7 @@ package edu.lingnan.talklater.modules.user.repository;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,11 @@ public interface UserXxRepository extends JpaRepository<UserXx, String>,JpaSpeci
 
     @Query(" select u from UserXx u")
     List<UserXx> findAllUser();
+
+    @Query(" select u from UserXx u where u.username = ?1 and u.password = ?2")
+    List<UserXx> queryByUsernameAndPassword(String username,String password);
+
+
 
 
 }
