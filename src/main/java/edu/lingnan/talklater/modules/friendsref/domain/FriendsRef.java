@@ -2,6 +2,8 @@ package edu.lingnan.talklater.modules.requestxx.domain;
 
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +17,8 @@ import java.io.Serializable;
 public class FriendsRef  implements Serializable {
 
     @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid")
     @Column(name = "id")
     private String id;
 

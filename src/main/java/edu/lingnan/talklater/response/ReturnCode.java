@@ -60,7 +60,12 @@ public enum ReturnCode {
     /**
      * 查询不到该用户
      */
-    FRIEDN_NOTFOUND(8, "查询不到该用户");
+    FRIEDN_NOTFOUND(8, "查询不到该用户"),
+
+    /**
+     * 已发送好友请求，请勿重复提交！
+     */
+    ERROR_RESUBMIT(9, "已发送好友请求，请勿重复提交！");
 
 
 
@@ -100,11 +105,13 @@ public enum ReturnCode {
             case 5:
                 return "不能添加自己为好友";
             case 6:
-                return "不能重复添加";
+                return "对方已经是您的好友";
             case 7:
                 return "好友账号不能为空";
             case 8:
                 return "查询不到该用户";
+            case 9:
+                return "请勿重复提交！";
             case 11:
                 return "登录账号不存在！";
             case 12:

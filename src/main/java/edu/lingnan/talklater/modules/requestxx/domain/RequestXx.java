@@ -2,6 +2,8 @@ package edu.lingnan.talklater.modules.requestxx.domain;
 
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +17,8 @@ import java.io.Serializable;
 public class RequestXx  implements Serializable {
 
     @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid")
     @Column(name = "id")
     private String id;
 
@@ -53,7 +57,7 @@ public class RequestXx  implements Serializable {
      * 是否有效，字典(0否；1是)，缺省值为1
      */
     @Column(name = "is_valid")
-    private Boolean valid;
+    private String valid;
 
     /**
      * 新增时间
@@ -130,14 +134,14 @@ public class RequestXx  implements Serializable {
     /**
      * @param valid the valid to set
      */
-    public void setValid(Boolean valid) {
+    public void setValid(String valid) {
         this.valid = valid;
     }
 
     /**
      * @return the valid
      */
-    public Boolean getValid() {
+    public String getValid() {
         return this.valid;
     }
 

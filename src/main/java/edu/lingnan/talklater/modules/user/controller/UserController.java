@@ -118,7 +118,7 @@ public class UserController {
         result.put("username",returnUserXx.getUsername());
         result.put("nickname",returnUserXx.getNickname());
         result.put("faceImg",returnUserXx.getFaceImg());
-        result.put("FunSignature",returnUserXx.getFunSignature());
+        result.put("funSignature",returnUserXx.getFunSignature());
 
         return ApiResponse.success(result);
     }
