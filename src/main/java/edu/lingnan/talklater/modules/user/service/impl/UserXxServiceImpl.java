@@ -83,6 +83,7 @@ public class UserXxServiceImpl implements UserXxService {
         if(StringUtil.isNullOrEmpty(userXx.getLastLoginEquipment())) userXx.setLastLoginEquipment("unknown");
 
         List<UserXx> users= userXxRepository.queryByUsernameAndPassword(userXx.getUsername(),userXx.getPassword());
+        if(users.isEmpty()) return null;
         UserXx currentUser = users.get(0);
 
         currentUser.setLastLoginEquipment(userXx.getLastLoginEquipment());
@@ -117,7 +118,7 @@ public class UserXxServiceImpl implements UserXxService {
         qrCodeUtil.createQRCodeToOutputStream(byteArrayOutputStream,returnUsesr.getUsername());
         //将二维码文件流上传到服务器，将访问路径保存到数据库中
         String path= fileUtil.uploadOutputStream(returnUsesr.getId()+"_qrcode.png",byteArrayOutputStream);//上传到服务器
-        System.out.println(returnUsesr.getId()+":1111111111111111111111");
+
         String userId=returnUsesr.getId();
 
 //        StringBuffer sql=new StringBuffer(" update u_user_xx set qrcode = ? where id = ?");

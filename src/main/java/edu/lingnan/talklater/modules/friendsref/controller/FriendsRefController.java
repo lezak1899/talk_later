@@ -1,10 +1,19 @@
 package edu.lingnan.talklater.modules.friendsref.controller;
 
+import edu.lingnan.talklater.modules.friendsref.domain.vo.FriendsRefVo;
+import edu.lingnan.talklater.modules.friendsref.service.FriendsRefService;
+import edu.lingnan.talklater.response.ApiResponse;
+import edu.lingnan.talklater.response.ReturnCode;
+import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Description:
@@ -18,6 +27,29 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequestMapping("/friendref")
 public class FriendsRefController {
+
+    @Autowired
+    private FriendsRefService friendsRefService;
+
+
+    @ApiOperation(value = "查询当前用户的好友列表")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/queryFriendList/{username}")
+    public ApiResponse queryFriendList(@PathVariable String username){
+
+        HashMap data = new HashMap();
+
+        if(StringUtil.isNullOrEmpty(username)) return ApiResponse.fail(ReturnCode.PARAM_NULL);
+
+        List<FriendsRefVo> friendsRefVoList = friendsRefService.queryFriendList(username);
+
+        data.put("friendsRefVoList",friendsRefVoList);
+
+        return ApiResponse.success(data);
+    }
+
 
 
 }

@@ -1,4 +1,4 @@
-package edu.lingnan.talklater.netty;
+package edu.lingnan.talklater.modules.chat.netty;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -16,7 +16,7 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  * version
  * since JDK 1.8
  */
-public class HelloWebsocketInitializer extends ChannelInitializer<SocketChannel> {
+public class ChatWebsocketInitializer extends ChannelInitializer<SocketChannel> {
 
 
     @Override
@@ -35,7 +35,7 @@ public class HelloWebsocketInitializer extends ChannelInitializer<SocketChannel>
         //对httpSocket的支持,并指定访问路径
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
         //自定义的hander
-         pipeline.addLast(new ChatHandler ());
+         pipeline.addLast(new ChatHandler());
 
 
     }

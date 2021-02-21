@@ -1,7 +1,9 @@
-import edu.lingnan.talklater.netty.WebSocketService;
+import edu.lingnan.talklater.modules.chat.netty.ChatWebSocketService;
+import edu.lingnan.talklater.utils.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -18,14 +20,23 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "edu.lingnan.talklater")
 @EntityScan("edu.lingnan.talklater")
 public class StartApplication {
+
+//    //将springUtil注册到spring
+//    @Bean
+//    public SpringUtil getSpingUtil() {
+//        return new SpringUtil();
+//    }
+
+
     public static void main(String[] args) {
+
         SpringApplication.run(StartApplication.class, args);
 
 
 
         try {
             //启动websocket
-            WebSocketService.getInstance().start();
+            ChatWebSocketService.getInstance().start();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

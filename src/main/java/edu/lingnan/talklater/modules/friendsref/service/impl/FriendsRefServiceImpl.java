@@ -8,9 +8,12 @@ import edu.lingnan.talklater.modules.user.domain.UserXx;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Types;
 import java.util.List;
 
 /**
@@ -27,6 +30,9 @@ public class FriendsRefServiceImpl implements FriendsRefService {
     @Autowired
     private FriendsRefRepository friendsRefRepository;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Override
     public Boolean isExist(FriendsRef friendsRef) {
         if (friendsRef==null) return false;
@@ -42,6 +48,7 @@ public class FriendsRefServiceImpl implements FriendsRefService {
         FriendsRef friendsRef = new FriendsRef();
         friendsRef.setUsername(username);
         friendsRef.setFriendUsername(friendUsername);
+        friendsRef.setValid("1");
         friendsRef.setCreatedDate(System.currentTimeMillis());
         friendsRefRepository.saveAndFlush(friendsRef);
         return true;
@@ -52,9 +59,13 @@ public class FriendsRefServiceImpl implements FriendsRefService {
 
         if(StringUtil.isNullOrEmpty(username)) return null;
 
+        StringBuffer sql = new StringBuffer();
 
+        sql.append(" select * from v_friend_ref where is_valid = '1' and username = ?");
 
-        return null;
+        List<FriendsRefVo> friendsRefVoList= jdbcTemplate.query(sql.toString(),new Object[]{username},new int[]{Types.VARCHAR},new BeanPropertyRowMapper(FriendsRefVo.class));
+
+        return friendsRefVoList;
     }
 
 }

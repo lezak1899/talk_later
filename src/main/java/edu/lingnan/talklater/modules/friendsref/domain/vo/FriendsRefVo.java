@@ -25,13 +25,13 @@ public class FriendsRefVo implements Serializable {
     private String friendUsername;
 
     @Column(name = "is_valid")
-    private String is_valid;
+    private String isValid;
 
     @Column(name = "friend_face_img")
-    private String friend_face_img;
+    private String friendFaceImg;
 
     @Column(name = "friend_nickname")
-    private String friend_nickname;
+    private String friendNickname;
 
     public String getId() {
         return id;
@@ -49,33 +49,32 @@ public class FriendsRefVo implements Serializable {
         this.friendUsername = friendUsername;
     }
 
-    public String getIs_valid() {
-        return is_valid;
+    public String getIsValid() {
+        return isValid;
     }
 
-    public void setIs_valid(String is_valid) {
-        this.is_valid = is_valid;
+    public void setIsValid(String isValid) {
+        this.isValid = isValid;
     }
 
-    public String getFriend_face_img() {
-        return friend_face_img;
+    public String getFriendFaceImg() {
+        return friendFaceImg;
     }
 
-    public void setFriend_face_img(String friend_face_img) {
-        this.friend_face_img = friend_face_img;
+    public void setFriendFaceImg(String friendFaceImg) {
+        this.friendFaceImg = friendFaceImg;
     }
 
-    public String getFriend_nickname() {
-        return friend_nickname;
+    public String getFriendNickname() {
+        return friendNickname;
     }
 
-    public void setFriend_nickname(String friend_nickname) {
-        this.friend_nickname = friend_nickname;
+    public void setFriendNickname(String friendNickname) {
+        this.friendNickname = friendNickname;
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (!(o instanceof FriendsRefVo)) return false;
 
@@ -84,19 +83,19 @@ public class FriendsRefVo implements Serializable {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (friendUsername != null ? !friendUsername.equals(that.friendUsername) : that.friendUsername != null)
             return false;
-        if (is_valid != null ? !is_valid.equals(that.is_valid) : that.is_valid != null) return false;
-        if (friend_face_img != null ? !friend_face_img.equals(that.friend_face_img) : that.friend_face_img != null)
+        if (isValid != null ? !isValid.equals(that.isValid) : that.isValid != null) return false;
+        if (friendFaceImg != null ? !friendFaceImg.equals(that.friendFaceImg) : that.friendFaceImg != null)
             return false;
-        return friend_nickname != null ? friend_nickname.equals(that.friend_nickname) : that.friend_nickname == null;
+        return friendNickname != null ? friendNickname.equals(that.friendNickname) : that.friendNickname == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (friendUsername != null ? friendUsername.hashCode() : 0);
-        result = 31 * result + (is_valid != null ? is_valid.hashCode() : 0);
-        result = 31 * result + (friend_face_img != null ? friend_face_img.hashCode() : 0);
-        result = 31 * result + (friend_nickname != null ? friend_nickname.hashCode() : 0);
+        result = 31 * result + (isValid != null ? isValid.hashCode() : 0);
+        result = 31 * result + (friendFaceImg != null ? friendFaceImg.hashCode() : 0);
+        result = 31 * result + (friendNickname != null ? friendNickname.hashCode() : 0);
         return result;
     }
 }

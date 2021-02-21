@@ -46,9 +46,6 @@ public class FileUtil {
 
 
 
-
-
-
     public String uploadOutputStream(String fileName, ByteArrayOutputStream byteArrayOutputStream){
 
         // 创建OSSClient实例。

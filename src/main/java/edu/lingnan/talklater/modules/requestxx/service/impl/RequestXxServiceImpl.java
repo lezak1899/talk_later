@@ -116,7 +116,6 @@ public class RequestXxServiceImpl implements RequestXxService {
 
         if(!requestXxOptional.isPresent()) return false;
 
-
         StringBuffer sql = new StringBuffer();
         sql.append(" update u_request_xx set request_state = ? ,modified_date = ?  where is_valid = '1' and id = ?");
         jdbcTemplate.update(sql.toString(),new Object[]{actionType,System.currentTimeMillis(),requestId},new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});

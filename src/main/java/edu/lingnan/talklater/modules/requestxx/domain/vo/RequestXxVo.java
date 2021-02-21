@@ -36,7 +36,7 @@ public class RequestXxVo {
     private String request_state;
 
     @Column(name = "is_valid")
-    private String valid;
+    private String is_valid;
 
     @Column(name = "created_date")
     private String createdDate;
@@ -89,12 +89,12 @@ public class RequestXxVo {
         this.request_state = request_state;
     }
 
-    public String getValid() {
-        return valid;
+    public String getIs_valid() {
+        return is_valid;
     }
 
-    public void setValid(String valid) {
-        this.valid = valid;
+    public void setIs_valid(String is_valid) {
+        this.is_valid = is_valid;
     }
 
     public String getCreatedDate() {
@@ -107,7 +107,6 @@ public class RequestXxVo {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (!(o instanceof RequestXxVo)) return false;
 
@@ -124,7 +123,7 @@ public class RequestXxVo {
             return false;
         if (request_state != null ? !request_state.equals(that.request_state) : that.request_state != null)
             return false;
-        if (valid != null ? !valid.equals(that.valid) : that.valid != null) return false;
+        if (is_valid != null ? !is_valid.equals(that.is_valid) : that.is_valid != null) return false;
         return createdDate != null ? createdDate.equals(that.createdDate) : that.createdDate == null;
     }
 
@@ -136,7 +135,7 @@ public class RequestXxVo {
         result = 31 * result + (senderFaceImg != null ? senderFaceImg.hashCode() : 0);
         result = 31 * result + (senderNickname != null ? senderNickname.hashCode() : 0);
         result = 31 * result + (request_state != null ? request_state.hashCode() : 0);
-        result = 31 * result + (valid != null ? valid.hashCode() : 0);
+        result = 31 * result + (is_valid != null ? is_valid.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }
