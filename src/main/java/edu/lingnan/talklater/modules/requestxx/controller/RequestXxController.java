@@ -1,12 +1,17 @@
 package edu.lingnan.talklater.modules.requestxx.controller;
 
+import edu.lingnan.talklater.modules.chat.Enum.MsgActionEnum;
+import edu.lingnan.talklater.modules.chat.domain.DataContent;
+import edu.lingnan.talklater.modules.chat.domain.UserChannelRel;
 import edu.lingnan.talklater.modules.friendsref.service.FriendsRefService;
-import edu.lingnan.talklater.modules.requestxx.domain.FriendsRef;
 import edu.lingnan.talklater.modules.requestxx.domain.RequestXx;
 import edu.lingnan.talklater.modules.requestxx.domain.vo.RequestXxVo;
 import edu.lingnan.talklater.modules.requestxx.service.RequestXxService;
 import edu.lingnan.talklater.response.ApiResponse;
 import edu.lingnan.talklater.response.ReturnCode;
+import edu.lingnan.talklater.utils.JsonUtils;
+import io.netty.channel.Channel;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +42,7 @@ public class RequestXxController {
     private FriendsRefService friendsRefService;
 
     @RequestMapping("/sendRequest")
-    public ApiResponse search(@RequestBody RequestXx requestXx){
+    public ApiResponse sendRequest(@RequestBody RequestXx requestXx){
 
         if(requestXx==null) return ApiResponse.fail(ReturnCode.PARAM_NULL);
         //校验
@@ -68,7 +73,29 @@ public class RequestXxController {
 
         boolean flag = requestXxService.handleRequest(requestId,actionType);
 
+
         if(!flag) return ApiResponse.fail();
+
+        //当好友请求发送者，发送的请求被通过时，重新拉取发送者的好友请求
+        if("2".equals(actionType)){
+
+            RequestXx requestXx = requestXxService.queryById(requestId);
+
+
+            if(requestXx!=null){
+                Channel sendChannel = UserChannelRel.get(requestXx.getSenderUsername());
+                if (sendChannel != null) {
+                    // 使用websocket主动推送消息到请求发起者，更新他的通讯录列表为最新
+                    DataContent dataContent = new DataContent();
+                    dataContent.setAction(MsgActionEnum.PULL_FRIEND.type);
+                    sendChannel.writeAndFlush(
+                            new TextWebSocketFrame(
+                                    JsonUtils.objectToJson(dataContent)));
+                }
+            }
+
+
+        }
 
         return ApiResponse.success();
 

@@ -4,6 +4,7 @@ import edu.lingnan.talklater.modules.chat.Enum.MsgActionEnum;
 import edu.lingnan.talklater.modules.chat.domain.DataContent;
 import edu.lingnan.talklater.modules.chat.domain.UserChannelRel;
 
+import edu.lingnan.talklater.modules.msg.domain.MsgXx;
 import edu.lingnan.talklater.modules.msg.service.MsgService;
 import edu.lingnan.talklater.utils.JsonUtils;
 
@@ -18,7 +19,6 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,93 +37,96 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     private SpringUtil springUtil;
 
     //用于记录和管理所有客户端,所有在线的用户的channel都会存储到这里
-     private static ChannelGroup users=new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+     public static ChannelGroup users=new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) throws Exception {
-        String content=textWebSocketFrame.text();
-
-        DataContent dataContent = JsonUtils.jsonToPojo(content,DataContent.class);
 
         //当前发送消息的Channel
         Channel currentChannel = channelHandlerContext.channel();
 
-        String senderUsername = dataContent.getChatMsg().getSenderUsername();
-        String recipientUsername = dataContent.getChatMsg().getRecipientUsername();
-        String msgText = dataContent.getChatMsg().getMsg();
+        //获得msgService
+        MsgService msgService = (MsgService) springUtil.getBean("msgServiceImpl");
+
+        //接收到的消息体
+        String content=textWebSocketFrame.text();
+        DataContent dataContent = JsonUtils.jsonToPojo(content,DataContent.class);
 
         System.out.println("接受的数据为："+ content);
 
         int actionType = dataContent.getAction();
 
-        //依据不同的actionType，执行相应的逻辑
+        /**
+         * 依据不同的actionType，执行相应的逻辑
+         * 1、action为初次连接
+         */
         if(actionType== MsgActionEnum.CONNECT.type){
-            //action为初次连接
+            String senderUsername = dataContent.getChatMsg().getSenderUsername();
+            String recipientUsername = dataContent.getChatMsg().getRecipientUsername();
+            String msgText = dataContent.getChatMsg().getMsg();
             //将username和channel关联起来
             UserChannelRel.put(senderUsername,currentChannel);
-
             // 测试
             for (Channel c : users) {
                 System.out.println(c.id().asLongText());
             }
             UserChannelRel.output();
+        }
+        /**
+         * 2、action为聊天，需要将发送者的消息存储到数据中，并且找到接收者的channel将消息推送出去
+         */
+        else if(actionType== MsgActionEnum.CHAT.type){
+            String senderUsername = dataContent.getChatMsg().getSenderUsername();
+            String recipientUsername = dataContent.getChatMsg().getRecipientUsername();
+            String msgText = dataContent.getChatMsg().getMsg();
+//            String ReadedFlag  = dataContent.getChatMsg().getReadedFlag();
 
-        }else if(actionType== MsgActionEnum.CHAT.type){
-            //action为聊天
-
-
-
-            //将聊天信息保存到据库，spring会将类名的首字母小写
-            MsgService msgService = (MsgService) springUtil.getBean("msgServiceImpl");
-            msgService.addMsg(senderUsername,recipientUsername,msgText);
+            //将数据写入数据库
+            MsgXx msgXxResult = msgService.addMsg(senderUsername,recipientUsername,msgText,"2");
 
             //进行消息的推送,通过接受者的Username找到对应的的Channal
             Channel recipientChannel = UserChannelRel.get(recipientUsername);
 
-            if (recipientChannel==null){
-                //用户已经离线,离线推送信息
-            }else{
-                Channel findChannel = users.find(recipientChannel.id());//有疑问
-
+            if (recipientChannel!=null){
+                Channel findChannel = users.find(recipientChannel.id());
                 if (findChannel!=null){
-                    findChannel.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(msgText)));//有疑问
-                }else {
-                    //用户已经离线,离线推送信息
+                    dataContent.getChatMsg().setId(msgXxResult.getId());
+                    findChannel.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(dataContent)));//如果对方在线就直接推送消息
                 }
-
             }
-
-
-        }else if(actionType== MsgActionEnum.SIGNED.type){
+        }
+        /**
+         *3、action为签收信息
+         */
+        else if(actionType== MsgActionEnum.SIGNED.type){
             //action为签收信息
 
             String msgIdsStr = dataContent.getExtand();
             String msgIds[] = msgIdsStr.split(",");
-
             List<String> msgIdList = new ArrayList<>();
             for (String mid : msgIds) {
-                if (StringUtil.isNullOrEmpty(mid)) {
+                if (!StringUtil.isNullOrEmpty(mid)) {
                     msgIdList.add(mid);
                 }
             }
-
             System.out.println(msgIdList.toString());
 
             if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
-                // 批量签收,更新数据库字段
-//                userService.updateMsgSigned(msgIdList);
+                msgService.batchSign(msgIdList);//批量签收,更新数据库字段
             }
-
-        }else if(actionType== MsgActionEnum.KEEPALIVE.type){
-            //action为保持心跳
+        }
+        /**
+         *4、action为保持心跳
+         */
+        else if(actionType== MsgActionEnum.KEEPALIVE.type){
             System.out.println("收到来自channel为[" + currentChannel + "]的心跳包...");
-
-        }else if(actionType== MsgActionEnum.PULL_FRIEND.type){
-            //action为拉取好友
+        }
+        /**
+         *5、action为拉取好友
+         */
+        else if(actionType== MsgActionEnum.PULL_FRIEND.type){
 
         }
-
-
 
     }
 

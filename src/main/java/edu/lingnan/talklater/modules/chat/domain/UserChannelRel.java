@@ -5,7 +5,11 @@ import java.util.HashMap;
 import io.netty.channel.Channel;
 
 /**
- * @Description: 用户账号和channel的关联关系处理
+ * Description: 用于绑定用户账号和通讯管道
+ * date: 2021/2/5 11:28
+ * author likunzhu
+ * version
+ * since JDK 1.8
  */
 public class UserChannelRel {
 

@@ -36,8 +36,13 @@ public interface RequestXxService {
     List<RequestXxVo> queryAllRequest(String username);
 
     /**
-     * 处理请求
+     * 处理请求,actionType为2是通过，为3是不通过
      * @return
      */
     boolean handleRequest(String requestId, String actionType);
+
+    /**
+     * 通过Id查找数据
+     */
+    RequestXx queryById(String id);
 }

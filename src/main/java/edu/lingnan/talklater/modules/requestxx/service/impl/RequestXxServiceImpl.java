@@ -128,4 +128,15 @@ public class RequestXxServiceImpl implements RequestXxService {
 
         return true;
     }
+
+    @Override
+    public RequestXx queryById(String id) {
+        Optional<RequestXx> optional =requestXxRepository.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        };
+        return null;
+    }
+
+
 }
