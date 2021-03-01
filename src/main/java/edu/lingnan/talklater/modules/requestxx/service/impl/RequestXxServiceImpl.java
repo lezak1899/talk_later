@@ -60,6 +60,7 @@ public class RequestXxServiceImpl implements RequestXxService {
         FriendsRef friendsRef = new FriendsRef();
         friendsRef.setUsername(senderName);
         friendsRef.setFriendUsername(recipientName);
+        friendsRef.setValid("1");
         if(friendsRefService.isExist(friendsRef)) return ReturnCode.FRIEND_ALREADY.getCode();
 
         //4、对同一个用户发送的好友请求，如果上一条请求还未被处理，不允许重复提交

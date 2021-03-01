@@ -18,6 +18,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,10 +68,10 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             //将username和channel关联起来
             UserChannelRel.put(senderUsername,currentChannel);
             // 测试
-            for (Channel c : users) {
-                System.out.println(c.id().asLongText());
-            }
-            UserChannelRel.output();
+//            for (Channel c : users) {
+//                System.out.println(c.id().asLongText());
+//            }
+//            UserChannelRel.output();
         }
         /**
          * 2、action为聊天，需要将发送者的消息存储到数据中，并且找到接收者的channel将消息推送出去

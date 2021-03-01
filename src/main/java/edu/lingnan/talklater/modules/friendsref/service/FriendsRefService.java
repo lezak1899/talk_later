@@ -28,4 +28,9 @@ public interface FriendsRefService {
      * 查询好友列表
      */
     List<FriendsRefVo> queryFriendList(String username);
+
+    /**
+     * 删除好友
+     */
+    int delFriend(String myUsername,String friendUsername);
 }

@@ -38,9 +38,9 @@ public class ChatWebsocketInitializer extends ChannelInitializer<SocketChannel> 
          * 心跳机制的handle，针对客户端，如果在1分钟时没有向服务端发送读写心跳(ALL)，则主动断开
          */
         // 如果是读空闲或者写空闲，不处理
-        pipeline.addLast(new IdleStateHandler(8, 10, 12));
-        // 自定义的空闲状态检测
-        pipeline.addLast(new HeartBeatHandler());
+//        pipeline.addLast(new IdleStateHandler(8, 10, 12));
+//        // 自定义的空闲状态检测
+//        pipeline.addLast(new HeartBeatHandler());
 
 
 

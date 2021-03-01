@@ -50,6 +50,27 @@ public class FriendsRefController {
         return ApiResponse.success(data);
     }
 
+    @ApiOperation(value = "删除好友")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/delFriend/{myUsername}/{friendUsername}")
+    public ApiResponse delFriend(@PathVariable("myUsername") String myUsername,@PathVariable("friendUsername") String friendUsername){
+
+
+
+        if(StringUtil.isNullOrEmpty(myUsername)||StringUtil.isNullOrEmpty(friendUsername)) return ApiResponse.fail(ReturnCode.PARAM_NULL);
+
+
+        int result =  friendsRefService.delFriend(myUsername,friendUsername);
+
+        if (result!=2){
+            ApiResponse.fail();
+        }
+
+        return ApiResponse.success();
+    }
+
 
 
 }
