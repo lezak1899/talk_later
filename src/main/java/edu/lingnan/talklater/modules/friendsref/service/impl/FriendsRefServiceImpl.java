@@ -103,7 +103,7 @@ public class FriendsRefServiceImpl implements FriendsRefService {
             Channel recipientChannel = UserChannelRel.get(friendUsername);
             if (recipientChannel!=null){
                 recipientChannel.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(dataContent)));//如果对方在线就直接推送消息
-                }
+            }
 
 
         }
