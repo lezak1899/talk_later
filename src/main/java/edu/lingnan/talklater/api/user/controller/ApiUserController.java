@@ -1,6 +1,7 @@
 package edu.lingnan.talklater.api.user.controller;
 
 
+import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.domain.dto.request.UserXxRequestDTO;
 import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -125,6 +127,50 @@ public class ApiUserController {
         result.put("funSignature",returnUserXx.getFunSignature());
 
         return ApiResponse.success(result);
+    }
+
+    /**
+     * 分页查询用户列表
+     */
+    @ApiOperation(value = "分页查询用户列表")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/queryUserPage")
+    public ApiResponse queryUserPage(@RequestBody QueryEntity queryEntity){
+        if(StringUtil.isNullOrEmpty(queryEntity.getUserType()))
+            return ApiResponse.fail(ReturnCode.PARAM_NULL);
+
+        Map<String,Object> data = new HashMap<>();
+
+        Page<UserXx> pageUserXx= userXxService.queryUserPage(queryEntity);
+
+        data.put("pageUserXx",pageUserXx);
+
+        return ApiResponse.success(data);
+    }
+
+    /**
+     * 修改单个属性值
+     */
+    @ApiOperation(value = "修改单个属性值")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/modifyByZdmc")
+    public ApiResponse modifyByZdmc(@RequestParam String userId,@RequestParam String zdmc ,@RequestParam String value){
+        if(StringUtil.isNullOrEmpty(userId) || StringUtil.isNullOrEmpty(zdmc)|| StringUtil.isNullOrEmpty(value))
+            return ApiResponse.fail(ReturnCode.PARAM_NULL);
+
+        Map<String,Object> data = new HashMap<>();
+
+        UserXx userXx = userXxService.modifyByZdmc(userId,zdmc,value);
+
+        if(userXx==null) return ApiResponse.fail();
+
+        data.put("currentUser",userXx);
+
+        return ApiResponse.success(data);
     }
 
 }

@@ -1,6 +1,11 @@
 package edu.lingnan.talklater.modules.user.service;
 
+import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 /**
  * Description:
@@ -61,5 +66,20 @@ public interface UserXxService {
      */
     public Boolean  modifyUserXxByZdmc (UserXx userXx,String zdmc);
 
+
+    /**
+     * 分页查询
+     */
+    public Page<UserXx> queryUserPage(QueryEntity queryEntity);
+
+
+    /**
+     * 管理端修改属性的service方法
+     * @param userId
+     * @param zdmc
+     * @param value
+     * @return
+     */
+    public UserXx modifyByZdmc(String userId, String zdmc,String value);
 
 }

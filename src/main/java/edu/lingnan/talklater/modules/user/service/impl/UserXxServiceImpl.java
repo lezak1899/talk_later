@@ -1,5 +1,6 @@
 package edu.lingnan.talklater.modules.user.service.impl;
 
+import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
@@ -8,7 +9,7 @@ import edu.lingnan.talklater.utils.FileUtil;
 import edu.lingnan.talklater.utils.QRCodeUtil;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -109,8 +110,8 @@ public class UserXxServiceImpl implements UserXxService {
         if(isExist(verifyUserXx)) return ReturnCode.USERNAME_HAS_BEEN_USE.getCode();
 
         //设置系统字段
-        userXx.setUsertype("1");//1为普通用户，2为管理员
-        userXx.setValid(true);
+        userXx.setUsertype("1");//1为普通用户，2为运维人员，3为系统管理员
+        userXx.setValid("1");
         userXx.setCreatedDate(System.currentTimeMillis());
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
 
@@ -158,6 +159,52 @@ public class UserXxServiceImpl implements UserXxService {
 
         if(n<1) return false;
         return true;
+    }
+
+    @Override
+    public Page<UserXx> queryUserPage(QueryEntity queryEntity) {
+
+        //定义过滤模板的实体类
+        UserXx userXx =new UserXx();
+        userXx.setUsertype(queryEntity.getUserType());
+
+        //过滤条件
+        if(queryEntity.getUserName()!=""){
+            userXx.setUsername(queryEntity.getUserName());
+        }
+
+
+        //生成example
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+        Example<UserXx> example = Example.of(userXx, matcher);
+
+        //分页，并且通过created_date字段进行降序排序
+        PageRequest of = PageRequest.of(queryEntity.getPageNum()-1, queryEntity.getPageSize(), Sort.Direction.DESC, "createdDate");
+
+        Page<UserXx> userXxPage = userXxRepository.findAll(example,of);
+
+        return userXxPage;
+    }
+
+
+    @Override
+    public UserXx  modifyByZdmc(String userId, String zdmc,String value) {
+
+        StringBuffer sql= new StringBuffer();
+        sql.append(" update u_user_xx ");
+        switch(zdmc){
+            case "is_valid" :
+                sql.append(" set is_valid = ? ");
+                break;
+        }
+        sql.append(" where id = ?");
+        int n= jdbcTemplate.update(sql.toString(),new Object[]{value,userId},new int[]{Types.VARCHAR,Types.VARCHAR});
+
+        if(n<1) return null;
+
+        UserXx userXx = userXxRepository.findById(userId).get();
+
+        return userXx;
     }
 
 

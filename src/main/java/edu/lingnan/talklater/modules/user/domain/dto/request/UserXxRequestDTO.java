@@ -108,7 +108,7 @@ public class UserXxRequestDTO implements Serializable {
      * 是否有效，字典(0否；1是)，缺省值为1
      */
     @ApiModelProperty(value = "是否有效，字典(0否；1是)，缺省值为1")
-    private Boolean valid;
+    private String isValid;
 
     /**
      * 删除时间
@@ -326,18 +326,12 @@ public class UserXxRequestDTO implements Serializable {
         return this.lastLoginEquipment;
     }
 
-    /**
-     * @param valid the valid to set
-     */
-    public void setValid(Boolean valid) {
-        this.valid = valid;
+    public String getIsValid() {
+        return isValid;
     }
 
-    /**
-     * @return the valid
-     */
-    public Boolean getValid() {
-        return this.valid;
+    public void setIsValid(String isValid) {
+        this.isValid = isValid;
     }
 
     /**

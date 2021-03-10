@@ -115,7 +115,7 @@ public class UserXx  implements Serializable {
      * 是否有效，字典(0否；1是)，缺省值为1
      */
     @Column(name = "is_valid")
-    private Boolean valid;
+    private String valid;
 
     /**
      * 新增时间
@@ -345,18 +345,12 @@ public class UserXx  implements Serializable {
         return this.lastLoginEquipment;
     }
 
-    /**
-     * @param valid the valid to set
-     */
-    public void setValid(Boolean valid) {
-        this.valid = valid;
+    public String getValid() {
+        return valid;
     }
 
-    /**
-     * @return the valid
-     */
-    public Boolean getValid() {
-        return this.valid;
+    public void setValid(String valid) {
+        this.valid = valid;
     }
 
     public Long getCreatedDate() {
@@ -389,33 +383,6 @@ public class UserXx  implements Serializable {
         return this.deletedDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserXx userXx = (UserXx) o;
-        return Objects.equals(id, userXx.id) &&
-                Objects.equals(usertype, userXx.usertype) &&
-                Objects.equals(username, userXx.username) &&
-                Objects.equals(sex, userXx.sex) &&
-                Objects.equals(password, userXx.password) &&
-                Objects.equals(phone, userXx.phone) &&
-                Objects.equals(faceImg, userXx.faceImg) &&
-                Objects.equals(faceImgWhole, userXx.faceImgWhole) &&
-                Objects.equals(nickname, userXx.nickname) &&
-                Objects.equals(qrcode, userXx.qrcode) &&
-                Objects.equals(plusId, userXx.plusId) &&
-                Objects.equals(funSignature, userXx.funSignature) &&
-                Objects.equals(lastLoginDate, userXx.lastLoginDate) &&
-                Objects.equals(lastLoginLocation, userXx.lastLoginLocation) &&
-                Objects.equals(lastLoginEquipment, userXx.lastLoginEquipment) &&
-                Objects.equals(valid, userXx.valid) &&
-                Objects.equals(deletedDate, userXx.deletedDate);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, usertype, username, sex, password, phone, faceImg, faceImgWhole, nickname, qrcode, plusId, funSignature, lastLoginDate, lastLoginLocation, lastLoginEquipment, valid, deletedDate);
-    }
 }
 
