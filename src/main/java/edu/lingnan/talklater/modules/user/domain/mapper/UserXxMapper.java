@@ -52,6 +52,8 @@ public final class UserXxMapper {
         userXx.setLastLoginEquipment(queryUserXxRequestDTO.getLastLoginEquipment());
         userXx.setValid(queryUserXxRequestDTO.getIsValid());
         userXx.setDeletedDate(queryUserXxRequestDTO.getDeletedDate());
+        userXx.setCreatedDate(queryUserXxRequestDTO.getCreatedDate());
+        userXx.setModified_date(queryUserXxRequestDTO.getModified_date());
 
         return userXx;
     }

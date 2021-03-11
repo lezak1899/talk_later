@@ -6,6 +6,8 @@
 package edu.lingnan.talklater.modules.user.domain;
 
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,6 +20,8 @@ import java.util.Objects;
  * @author likunzhu
  */
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "u_user_xx")
 public class UserXx  implements Serializable {
 

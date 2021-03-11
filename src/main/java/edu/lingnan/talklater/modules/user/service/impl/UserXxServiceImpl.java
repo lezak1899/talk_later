@@ -34,7 +34,6 @@ import java.util.Optional;
 public class UserXxServiceImpl implements UserXxService {
 
 
-
     @Autowired
     private UserXxRepository userXxRepository;
 
@@ -110,7 +109,7 @@ public class UserXxServiceImpl implements UserXxService {
         if(isExist(verifyUserXx)) return ReturnCode.USERNAME_HAS_BEEN_USE.getCode();
 
         //设置系统字段
-        userXx.setUsertype("1");//1为普通用户，2为运维人员，3为系统管理员
+        userXx.setUsertype(userXx.getUsertype());//1为普通用户，2为运维人员，3为系统管理员
         userXx.setValid("1");
         userXx.setCreatedDate(System.currentTimeMillis());
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
@@ -172,6 +171,9 @@ public class UserXxServiceImpl implements UserXxService {
         if(queryEntity.getUserName()!=""){
             userXx.setUsername(queryEntity.getUserName());
         }
+        if(queryEntity.getNickname()!=""){
+            userXx.setNickname(queryEntity.getNickname());
+        }
 
 
         //生成example
@@ -205,6 +207,26 @@ public class UserXxServiceImpl implements UserXxService {
         UserXx userXx = userXxRepository.findById(userId).get();
 
         return userXx;
+    }
+
+    @Override
+    public Boolean modifyUsesr(UserXx userXx) {
+
+        StringBuffer sql = new StringBuffer();
+
+        sql.append(" update u_user_xx set nickname = ?,");
+        sql.append(" password = ? ,");
+        sql.append(" sex = ?,");
+        sql.append(" userType = ?");
+        sql.append(" where id = ?");
+
+        int n= jdbcTemplate.update(sql.toString(),
+                new Object[]{userXx.getNickname(),userXx.getPassword(),userXx.getSex(),userXx.getUsertype(),userXx.getId()},
+                new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});
+
+        if(n<1) return false;
+
+        return true;
     }
 
 

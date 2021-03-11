@@ -82,4 +82,9 @@ public interface UserXxService {
      */
     public UserXx modifyByZdmc(String userId, String zdmc,String value);
 
+    /**
+     * 修改用户信息
+     */
+    public Boolean modifyUsesr(UserXx userXx);
+
 }

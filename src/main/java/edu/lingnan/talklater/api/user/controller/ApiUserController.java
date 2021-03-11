@@ -173,4 +173,32 @@ public class ApiUserController {
         return ApiResponse.success(data);
     }
 
+    @ApiOperation(value = "录入用户接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/addUser")
+    public ApiResponse addUser(@RequestBody UserXxRequestDTO userXxRequestDTO){
+        UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
+        int code = userXxService.register(userXx);
+        if(code!=ReturnCode.SUCCESS.getCode()){
+            return ApiResponse.fail(code,ReturnCode.getMsg(code));
+        }
+        return ApiResponse.success();
+    }
+
+
+    @ApiOperation(value = "修改用户信息接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/modifyUser")
+    public ApiResponse modifyUser(@RequestBody UserXxRequestDTO userXxRequestDTO){
+        UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
+
+        userXxService.modifyUsesr(userXx);
+
+        return ApiResponse.success();
+    }
+
 }

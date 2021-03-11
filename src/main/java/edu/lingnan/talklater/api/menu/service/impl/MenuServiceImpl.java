@@ -57,16 +57,13 @@ public class MenuServiceImpl implements MenuService {
              ) {
             String menuId = item.getId();
             StringBuffer querySql = new StringBuffer();
-            querySql.append(" select * from u_menu_xx umx where f_id = ?");
+            querySql.append(" select * from u_menu_xx umx where f_id = ? and is_valid='1");
             List<MenuXx> queryResult = jdbcTemplate.query(querySql.toString(),new Object[]{menuId},new int[]{Types.VARCHAR},new BeanPropertyRowMapper(MenuXx.class));
 
             item.setChilds(queryResult);
 
 
         }
-
-
-
 
 
         return result;

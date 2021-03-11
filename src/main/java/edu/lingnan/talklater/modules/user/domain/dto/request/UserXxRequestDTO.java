@@ -8,6 +8,7 @@ package edu.lingnan.talklater.modules.user.domain.dto.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 
 /**
@@ -16,7 +17,8 @@ import java.io.Serializable;
  */
 @ApiModel(value = "UserXxRequestDTO", description = "查询UserXx请求dto类")
 public class UserXxRequestDTO implements Serializable {
-    
+
+
     @ApiModelProperty(value = "主键")
     private String id;
 
@@ -109,6 +111,18 @@ public class UserXxRequestDTO implements Serializable {
      */
     @ApiModelProperty(value = "是否有效，字典(0否；1是)，缺省值为1")
     private String isValid;
+
+    /**
+     * 新增时间
+     */
+    @Column(name = "created_date")
+    private Long createdDate;
+
+    /**
+     * 修改时间
+     */
+    @Column(name = "modified_date")
+    private Long modified_date;
 
     /**
      * 删除时间
@@ -346,5 +360,21 @@ public class UserXxRequestDTO implements Serializable {
      */
     public Long getDeletedDate() {
         return this.deletedDate;
+    }
+
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getModified_date() {
+        return modified_date;
+    }
+
+    public void setModified_date(Long modified_date) {
+        this.modified_date = modified_date;
     }
 }

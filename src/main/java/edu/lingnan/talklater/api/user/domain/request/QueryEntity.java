@@ -15,9 +15,14 @@ public class QueryEntity {
     private String userType;
 
     /**
-     * 用户类型
+     * 用户账号
      */
     private String userName;
+
+    /**
+     * 用户昵称
+     */
+    private String nickname;
 
     /**
      * 当前查询页下表
@@ -59,5 +64,13 @@ public class QueryEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
