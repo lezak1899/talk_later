@@ -1,9 +1,10 @@
 package edu.lingnan.talklater.modules.user.service.impl;
 
-import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
+import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
+import edu.lingnan.talklater.request.QueryEntity;
 import edu.lingnan.talklater.response.ReturnCode;
 import edu.lingnan.talklater.utils.FileUtil;
 import edu.lingnan.talklater.utils.QRCodeUtil;
@@ -161,7 +162,7 @@ public class UserXxServiceImpl implements UserXxService {
     }
 
     @Override
-    public Page<UserXx> queryUserPage(QueryEntity queryEntity) {
+    public Page<UserXx> queryUserPage(UserQueryEntity queryEntity) {
 
         //定义过滤模板的实体类
         UserXx userXx =new UserXx();

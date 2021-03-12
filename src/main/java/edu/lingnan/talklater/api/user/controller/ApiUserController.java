@@ -1,7 +1,8 @@
 package edu.lingnan.talklater.api.user.controller;
 
 
-import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
+
+import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.domain.dto.request.UserXxRequestDTO;
 import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
@@ -137,7 +138,7 @@ public class ApiUserController {
             @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
     })
     @RequestMapping(method = RequestMethod.POST, value = "/queryUserPage")
-    public ApiResponse queryUserPage(@RequestBody QueryEntity queryEntity){
+    public ApiResponse queryUserPage(@RequestBody UserQueryEntity queryEntity){
         if(StringUtil.isNullOrEmpty(queryEntity.getUserType()))
             return ApiResponse.fail(ReturnCode.PARAM_NULL);
 

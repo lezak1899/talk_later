@@ -1,7 +1,7 @@
 package edu.lingnan.talklater.api.role.controller;
 
-import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
-import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
+
 import edu.lingnan.talklater.response.ApiResponse;
 import edu.lingnan.talklater.response.ReturnCode;
 import io.netty.util.internal.StringUtil;
@@ -9,7 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,8 +39,8 @@ public class RoleController {
     @ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
     })
-    @RequestMapping(method = RequestMethod.POST, value = "/queryUserPage")
-    public ApiResponse queryUserPage(@RequestBody QueryEntity queryEntity){
+    @RequestMapping(method = RequestMethod.POST, value = "/queryRolePage")
+    public ApiResponse queryUserPage(@RequestBody UserQueryEntity queryEntity){
         if(StringUtil.isNullOrEmpty(queryEntity.getUserType()))
             return ApiResponse.fail(ReturnCode.PARAM_NULL);
 

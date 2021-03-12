@@ -1,5 +1,7 @@
 package edu.lingnan.talklater.api.user.domain.request;
 
+import edu.lingnan.talklater.request.QueryEntity;
+
 /**
  * Description: 分页信息实体类
  * date: 2021/3/9 22:47
@@ -7,7 +9,7 @@ package edu.lingnan.talklater.api.user.domain.request;
  * @author likunzhu
  * @since
  */
-public class QueryEntity {
+public class UserQueryEntity extends QueryEntity {
 
     /**
      * 用户类型
@@ -24,15 +26,7 @@ public class QueryEntity {
      */
     private String nickname;
 
-    /**
-     * 当前查询页下表
-     */
-    private int pageNum;
 
-    /**
-     * 每页包含多少条数据
-     */
-    private int pageSize;
 
     public String getUserType() {
         return userType;
@@ -42,21 +36,6 @@ public class QueryEntity {
         this.userType = userType;
     }
 
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
 
     public String getUserName() {
         return userName;

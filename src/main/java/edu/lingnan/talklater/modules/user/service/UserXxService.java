@@ -1,6 +1,7 @@
 package edu.lingnan.talklater.modules.user.service;
 
-import edu.lingnan.talklater.api.user.domain.request.QueryEntity;
+
+import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
@@ -70,7 +71,7 @@ public interface UserXxService {
     /**
      * 分页查询
      */
-    public Page<UserXx> queryUserPage(QueryEntity queryEntity);
+    public Page<UserXx> queryUserPage(UserQueryEntity queryEntity);
 
 
     /**
