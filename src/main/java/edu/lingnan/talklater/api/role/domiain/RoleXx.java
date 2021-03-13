@@ -56,7 +56,20 @@ public class RoleXx implements Serializable {
      * 是否有效，字典(0否；1是)，缺省值为1
      */
     @Column(name = "is_valid")
-    private Boolean valid;
+    private String valid;
+
+    /**
+     * 创建时间
+     */
+    @Column(name = "created_date")
+    private Long createdDate;
+
+
+    /**
+     * 修改时间
+     */
+    @Column(name = "modified_date")
+    private Long modifiedDate;
 
     /**
      * 删除时间
@@ -120,18 +133,12 @@ public class RoleXx implements Serializable {
         return this.bz;
     }
 
-    /**
-     * @param valid the valid to set
-     */
-    public void setValid(Boolean valid) {
-        this.valid = valid;
+    public String getValid() {
+        return valid;
     }
 
-    /**
-     * @return the valid
-     */
-    public Boolean getValid() {
-        return this.valid;
+    public void setValid(String valid) {
+        this.valid = valid;
     }
 
     /**
@@ -149,5 +156,20 @@ public class RoleXx implements Serializable {
     }
 
 
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Long modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 }
 

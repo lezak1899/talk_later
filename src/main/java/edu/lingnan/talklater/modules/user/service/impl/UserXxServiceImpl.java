@@ -191,7 +191,7 @@ public class UserXxServiceImpl implements UserXxService {
 
 
     @Override
-    public UserXx  modifyByZdmc(String userId, String zdmc,String value) {
+    public UserXx modifyByZdmc(String userId, String zdmc,String value) {
 
         StringBuffer sql= new StringBuffer();
         sql.append(" update u_user_xx ");

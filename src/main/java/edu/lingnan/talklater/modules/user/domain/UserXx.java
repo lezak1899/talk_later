@@ -20,8 +20,6 @@ import java.util.Objects;
  * @author likunzhu
  */
 @Entity
-@DynamicInsert
-@DynamicUpdate
 @Table(name = "u_user_xx")
 public class UserXx  implements Serializable {
 

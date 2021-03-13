@@ -8,13 +8,14 @@ package edu.lingnan.talklater.api.menu.repository;
 import edu.lingnan.talklater.api.menu.domain.MenuXx;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
+import org.springframework.stereotype.Repository;
 
 
 /**
  * MenuXx仓库
  * @author likunzhu
  */
+@Repository
 public interface MenuXxRepository extends JpaRepository<MenuXx, String>, JpaSpecificationExecutor<MenuXx> {
 
 }

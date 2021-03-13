@@ -9,15 +9,7 @@ package edu.lingnan.talklater.response;
  */
 public enum ReturnCode {
 
-    /**
-     * 登录账号不存在！
-     */
-    USER_NOTFOUND(11, "登录账号不存在！"),
 
-    /**
-     * 密码错误！
-     */
-    USER_PASSWOED_ERROR(12, "密码错误！"),
 
     /**
      * 请求成功
@@ -65,7 +57,22 @@ public enum ReturnCode {
     /**
      * 已发送好友请求，请勿重复提交！
      */
-    ERROR_RESUBMIT(9, "已发送好友请求，请勿重复提交！");
+    ERROR_RESUBMIT(9, "已发送好友请求，请勿重复提交！"),
+
+    /**
+     * 菜单已存在，不可重复添加！
+     */
+    MENU_EXSIT(10, "菜单已存在，不可重复添加！"),
+
+    /**
+     * 登录账号不存在！
+     */
+    USER_NOTFOUND(11, "登录账号不存在！"),
+
+    /**
+     * 密码错误！
+     */
+    USER_PASSWOED_ERROR(12, "密码错误！");
 
 
 
@@ -112,6 +119,8 @@ public enum ReturnCode {
                 return "查询不到该用户";
             case 9:
                 return "请勿重复提交！";
+            case 10:
+                return "菜单已存在，不可重复添加！";
             case 11:
                 return "登录账号不存在！";
             case 12:
