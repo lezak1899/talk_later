@@ -9,6 +9,7 @@ package edu.lingnan.talklater.modules.user.domain.mapper;
 import edu.lingnan.talklater.modules.user.domain.dto.request.UserXxRequestDTO;
 
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
 
 /**
  * UserXx领域模型转换类，负责dto跟实体互相转换
@@ -33,7 +34,6 @@ public final class UserXxMapper {
         if (queryUserXxRequestDTO == null) {
             return null;
         }
-
         UserXx userXx = new UserXx();
         userXx.setId(queryUserXxRequestDTO.getId());
         userXx.setUsertype(queryUserXxRequestDTO.getUsertype());
@@ -54,8 +54,41 @@ public final class UserXxMapper {
         userXx.setDeletedDate(queryUserXxRequestDTO.getDeletedDate());
         userXx.setCreatedDate(queryUserXxRequestDTO.getCreatedDate());
         userXx.setModified_date(queryUserXxRequestDTO.getModified_date());
-
         return userXx;
+    }
+
+
+    /**
+     * UserXx 转化为 UserXxResponseDTO
+     *
+     */
+    public static UserXxResponseDTO userXxToUserXxResponseDTO(UserXx userXx) {
+        if (userXx == null) {
+            return null;
+        }
+
+        UserXxResponseDTO userXxResponseDTO =new UserXxResponseDTO();
+
+        userXxResponseDTO.setId(userXx.getId());
+        userXxResponseDTO.setUsertype(userXx.getUsertype());
+        userXxResponseDTO.setUsername(userXx.getUsername());
+        userXxResponseDTO.setSex(userXx.getSex());
+        userXxResponseDTO.setPassword(userXx.getPassword());
+        userXxResponseDTO.setPhone(userXx.getPhone());
+        userXxResponseDTO.setFaceImg(userXx.getFaceImg());
+        userXxResponseDTO.setFaceImgWhole(userXx.getFaceImgWhole());
+        userXxResponseDTO.setNickname(userXx.getNickname());
+        userXxResponseDTO.setQrcode(userXx.getQrcode());
+        userXxResponseDTO.setPlusId(userXx.getPlusId());
+        userXxResponseDTO.setFunSignature(userXx.getFunSignature());
+        userXxResponseDTO.setLastLoginDate(userXx.getLastLoginDate());
+        userXxResponseDTO.setLastLoginLocation(userXx.getLastLoginLocation());
+        userXxResponseDTO.setLastLoginEquipment(userXx.getLastLoginEquipment());
+        userXxResponseDTO.setDeletedDate(userXx.getDeletedDate());
+        userXxResponseDTO.setCreatedDate(userXx.getCreatedDate());
+        userXxResponseDTO.setModified_date(userXx.getModified_date());
+
+        return userXxResponseDTO;
     }
 
 }

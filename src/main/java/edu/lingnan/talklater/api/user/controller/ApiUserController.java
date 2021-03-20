@@ -5,6 +5,7 @@ package edu.lingnan.talklater.api.user.controller;
 import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.domain.dto.request.UserXxRequestDTO;
+import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
 import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
 import edu.lingnan.talklater.response.ApiResponse;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +47,9 @@ public class ApiUserController {
             @io.swagger.annotations.ApiResponse(code = 11, message = "登录账号不存在！"),
     })
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public ApiResponse login(@RequestBody UserXxRequestDTO userXxRequestDTO, HttpSession session){
+    public ApiResponse login(@RequestBody UserXxRequestDTO userXxRequestDTO, HttpServletRequest httpServletRequest){
+
+        HttpSession session = httpServletRequest.getSession();
         Map result = new HashMap();
         String username = userXxRequestDTO.getUsername();
         String  password = userXxRequestDTO.getPassword();
@@ -65,7 +69,10 @@ public class ApiUserController {
         result.put("currentUser",currentUser);
 
         //session缓存登录对象
-        session.setAttribute("currentuser",currentUser);
+        session.setAttribute("currentUser",currentUser);
+        session.setMaxInactiveInterval(60*15);//15分钟没有请求，就会过期
+
+        System.out.println("登录：：："+session.getAttribute("currentUser").toString());
 
         return ApiResponse.success(result);
     }
@@ -188,6 +195,24 @@ public class ApiUserController {
         return ApiResponse.success();
     }
 
+    @ApiOperation(value = "查询用户信息")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/check/{userId}")
+    public ApiResponse checkUserInfo(@PathVariable("userId") String userId){
+        if(StringUtil.isNullOrEmpty(userId) )
+            return ApiResponse.fail(ReturnCode.PARAM_NULL);
+
+         Map<String,Object> data = new HashMap<>();
+
+         UserXxResponseDTO userInfo= userXxService.checkUserInfo(userId);
+
+         data.put("userInfo",userInfo);
+
+        return ApiResponse.success(data);
+    }
+
 
     @ApiOperation(value = "修改用户信息接口")
     @ApiResponses(value = {
@@ -197,8 +222,21 @@ public class ApiUserController {
     public ApiResponse modifyUser(@RequestBody UserXxRequestDTO userXxRequestDTO){
         UserXx userXx= UserXxMapper.userXxRequestDTOToUserXx(userXxRequestDTO);
 
-        userXxService.modifyUsesr(userXx);
+        Map<String,Object> data = new HashMap<>();
+         userXxService.modifyUsesr(userXx);
 
+        return ApiResponse.success();
+    }
+
+    @ApiOperation(value = "注销登录接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.GET, value = "/logout")
+    public ApiResponse logout(HttpSession session) {
+
+
+        session.invalidate();
         return ApiResponse.success();
     }
 

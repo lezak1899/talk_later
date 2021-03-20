@@ -3,6 +3,7 @@ package edu.lingnan.talklater.modules.user.service;
 
 import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 
@@ -87,5 +88,12 @@ public interface UserXxService {
      * 修改用户信息
      */
     public Boolean modifyUsesr(UserXx userXx);
+
+
+
+    /**
+     * 查询用户信息接口
+     */
+    public UserXxResponseDTO checkUserInfo(String userId);
 
 }

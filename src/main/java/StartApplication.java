@@ -32,15 +32,12 @@ public class StartApplication {
 
         SpringApplication.run(StartApplication.class, args);
 
-
-
         try {
             //启动websocket
             ChatWebSocketService.getInstance().start();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
     }
 

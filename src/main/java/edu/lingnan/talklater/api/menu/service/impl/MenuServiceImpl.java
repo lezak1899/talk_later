@@ -60,6 +60,7 @@ public class MenuServiceImpl implements MenuService {
         sql.append(" left join (select * from u_menu_xx umx where is_valid='1') umx on (umx.id = urm.menu_id)");
         sql.append(" where f_id = '1' order by umx.order");
         List<MenuXx> sqlResult = jdbcTemplate.query(sql.toString(),new Object[]{userId},new int[]{Types.VARCHAR},new BeanPropertyRowMapper(MenuXx.class));
+
         result = MenuXxMapper.fromMenuXxListToMenuTreeList(sqlResult);
 
         /**
@@ -157,8 +158,6 @@ public class MenuServiceImpl implements MenuService {
         sql.append(" select id as value ,name as label from u_menu_xx umx");
         sql.append(" where f_id = ?");
         sql.append(" and is_valid=1");
-
-
 
         List<MenuOption> menuOptions = jdbcTemplate.query(sql.toString(),new Object[]{fid},new int[]{Types.VARCHAR},new BeanPropertyRowMapper(MenuOption.class));
 

@@ -3,121 +3,113 @@
  * distributed with this file and available online at
  * http://www.sinobest.cn
  */
-package edu.lingnan.talklater.modules.user.domain;
+package edu.lingnan.talklater.modules.user.domain.dto.response;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import javax.persistence.Column;
 import java.io.Serializable;
-import java.util.Objects;
-
-
 
 /**
+ * 查询UserXx请求dto类
  * @author likunzhu
  */
-@Entity
-@Table(name = "u_user_xx")
-public class UserXx  implements Serializable {
+@ApiModel(value = "UserXxRequestDTO", description = "查询UserXx请求dto类")
+public class UserXxResponseDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid")
-    @Column(name = "id")
+    @ApiModelProperty(value = "主键")
     private String id;
 
     /**
      * 用户类型，1： 普通用户；2：管理员
      */
-    @Column(name = "usertype")
+    @ApiModelProperty(value = "用户类型，1： 普通用户；2：管理员")
     private String usertype;
 
     /**
      * 用户名称，用于登陆
      */
-    @Column(name = "username")
+    @ApiModelProperty(value = "用户名称，用于登陆")
     private String username;
 
     /**
      * 性别
      */
-    @Column(name = "sex")
+    @ApiModelProperty(value = "性别")
     private String sex;
 
     /**
      * 密码
      */
-    @Column(name = "password")
+    @ApiModelProperty(value = "密码")
     private String password;
 
     /**
      * 手机号码
      */
-    @Column(name = "phone")
+    @ApiModelProperty(value = "手机号码")
     private String phone;
 
     /**
      * 头像预览图
      */
-    @Column(name = "face_img")
+    @ApiModelProperty(value = "头像预览图")
     private String faceImg;
 
     /**
      * 头像像完整图
      */
-    @Column(name = "face_img_whole")
+    @ApiModelProperty(value = "头像像完整图")
     private String faceImgWhole;
 
     /**
      * 昵称
      */
-    @Column(name = "nickname")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
     /**
      * 二维码
      */
-    @Column(name = "qrcode")
+    @ApiModelProperty(value = "二维码")
     private String qrcode;
 
     /**
      * 设备id
      */
-    @Column(name = "plus_id")
+    @ApiModelProperty(value = "设备id")
     private String plusId;
 
     /**
      * 个性签名
      */
-    @Column(name = "fun_signature")
+    @ApiModelProperty(value = "个性签名")
     private String funSignature;
 
     /**
      * 上一次登录时间
      */
-    @Column(name = "last_login_date")
+    @ApiModelProperty(value = "上一次登录时间")
     private Long lastLoginDate;
 
     /**
      * 上一次登录地点
      */
-    @Column(name = "last_login_location")
+    @ApiModelProperty(value = "上一次登录地点")
     private String lastLoginLocation;
 
     /**
      * 上一次登录设备信息
      */
-    @Column(name = "last_login_equipment")
+    @ApiModelProperty(value = "上一次登录设备信息")
     private String lastLoginEquipment;
 
     /**
      * 是否有效，字典(0否；1是)，缺省值为1
      */
-    @Column(name = "is_valid")
-    private String valid;
+    @ApiModelProperty(value = "是否有效，字典(0否；1是)，缺省值为1")
+    private String isValid;
 
     /**
      * 新增时间
@@ -134,7 +126,7 @@ public class UserXx  implements Serializable {
     /**
      * 删除时间
      */
-    @Column(name = "deleted_date")
+    @ApiModelProperty(value = "删除时间")
     private Long deletedDate;
 
     /**
@@ -347,12 +339,26 @@ public class UserXx  implements Serializable {
         return this.lastLoginEquipment;
     }
 
-    public String getValid() {
-        return valid;
+    public String getIsValid() {
+        return isValid;
     }
 
-    public void setValid(String valid) {
-        this.valid = valid;
+    public void setIsValid(String isValid) {
+        this.isValid = isValid;
+    }
+
+    /**
+     * @param deletedDate the deletedDate to set
+     */
+    public void setDeletedDate(Long deletedDate) {
+        this.deletedDate = deletedDate;
+    }
+
+    /**
+     * @return the deletedDate
+     */
+    public Long getDeletedDate() {
+        return this.deletedDate;
     }
 
     public Long getCreatedDate() {
@@ -371,43 +377,4 @@ public class UserXx  implements Serializable {
         this.modified_date = modified_date;
     }
 
-    /**
-     * @param deletedDate the deletedDate to set
-     */
-    public void setDeletedDate(Long deletedDate) {
-        this.deletedDate = deletedDate;
-    }
-
-    /**
-     * @return the deletedDate
-     */
-    public Long getDeletedDate() {
-        return this.deletedDate;
-    }
-
-    @Override
-    public String toString() {
-        return "UserXx{" +
-                "id='" + id + '\'' +
-                ", usertype='" + usertype + '\'' +
-                ", username='" + username + '\'' +
-                ", sex='" + sex + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", faceImg='" + faceImg + '\'' +
-                ", faceImgWhole='" + faceImgWhole + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", qrcode='" + qrcode + '\'' +
-                ", plusId='" + plusId + '\'' +
-                ", funSignature='" + funSignature + '\'' +
-                ", lastLoginDate=" + lastLoginDate +
-                ", lastLoginLocation='" + lastLoginLocation + '\'' +
-                ", lastLoginEquipment='" + lastLoginEquipment + '\'' +
-                ", valid='" + valid + '\'' +
-                ", createdDate=" + createdDate +
-                ", modified_date=" + modified_date +
-                ", deletedDate=" + deletedDate +
-                '}';
-    }
 }
-

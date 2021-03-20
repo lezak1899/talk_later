@@ -1,7 +1,10 @@
 package edu.lingnan.talklater.modules.user.service.impl;
 
 import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
+import edu.lingnan.talklater.modules.user.domain.RoleDict;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
+import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
 import edu.lingnan.talklater.request.QueryEntity;
@@ -31,6 +34,7 @@ import java.util.Optional;
  * since JDK 1.8
  */
 @Transactional
+
 @Service
 public class UserXxServiceImpl implements UserXxService {
 
@@ -114,6 +118,20 @@ public class UserXxServiceImpl implements UserXxService {
         userXx.setValid("1");
         userXx.setCreatedDate(System.currentTimeMillis());
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
+
+        //获得roleId
+//        String roleId;
+//        if(userXx.getUsertype()=="1") roleId="02042156-7f26-11eb-bb75-00ffbd07b1ad";//普通用户Id
+//        else if(userXx.getUsertype()=="2") roleId="02d5677e-7f26-11eb-bb75-00ffbd07b1ad";//运维人员
+//        else roleId="f64e9b3f-7f25-11eb-bb75-00ffbd07b1ad";//系统管理员
+
+        //绑定用户和角色
+        StringBuffer sql = new StringBuffer();
+        sql.append(" insert into u_user_role (id,role_id,user_id,is_valid,created_date) values(uuid(),?,?,'1',?);");
+
+        jdbcTemplate.update(sql.toString(),
+                new Object[]{RoleDict.RoleDict(userXx.getUsertype()).getId(),returnUsesr.getId(),System.currentTimeMillis()},
+                new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});
 
         //生成二维码文件流
         qrCodeUtil.createQRCodeToOutputStream(byteArrayOutputStream,returnUsesr.getUsername());
@@ -221,6 +239,7 @@ public class UserXxServiceImpl implements UserXxService {
         sql.append(" userType = ?");
         sql.append(" where id = ?");
 
+
         int n= jdbcTemplate.update(sql.toString(),
                 new Object[]{userXx.getNickname(),userXx.getPassword(),userXx.getSex(),userXx.getUsertype(),userXx.getId()},
                 new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});
@@ -229,6 +248,18 @@ public class UserXxServiceImpl implements UserXxService {
 
         return true;
     }
+
+
+    /**
+     * 查询用户信息接口
+     */
+    @Override
+    public UserXxResponseDTO checkUserInfo(String userId){
+        UserXx userXx= userXxRepository.findById(userId).get();
+        UserXxResponseDTO userXxResponseDTO = UserXxMapper.userXxToUserXxResponseDTO(userXx);
+        return userXxResponseDTO;
+    };
+
 
 
 }
