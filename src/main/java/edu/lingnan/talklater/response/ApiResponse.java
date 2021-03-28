@@ -18,14 +18,10 @@ import java.util.Map;
 
 @Slf4j
 public class ApiResponse  implements Serializable {
-
-
     /**响应编码：200成功；-1系统异常；*/
     private int code;
-
     /**响应结果描述*/
     private String message;
-
     /**业务数据*/
     private Map<String,Object> data;
 

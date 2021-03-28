@@ -22,6 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+//                .maxAge(168000)
 //                .allowedOrigins("http://localhost:8080")
                 .allowedOrigins("*")
                 .allowedMethods("*")
@@ -33,9 +34,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * 登录拦截器
      * @param registry
      */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/api/**").excludePathPatterns(
-                "/api/user/login","/api/user/logout");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/api/**").excludePathPatterns(
+//                "/api/user/login","/api/user/logout");
+//    }
 }

@@ -80,8 +80,9 @@ public class UserController {
         UserXx currentUser= userXxService.queryOne(userXx);
         result.put("currentUser",currentUser);
         return ApiResponse.success(result);
-
     }
+
+
 
     @ApiOperation(value = "注册接口")
     @ApiResponses(value = {

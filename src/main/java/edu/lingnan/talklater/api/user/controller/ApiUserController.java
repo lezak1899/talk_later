@@ -235,7 +235,6 @@ public class ApiUserController {
     @RequestMapping(method = RequestMethod.GET, value = "/logout")
     public ApiResponse logout(HttpSession session) {
 
-
         session.invalidate();
         return ApiResponse.success();
     }

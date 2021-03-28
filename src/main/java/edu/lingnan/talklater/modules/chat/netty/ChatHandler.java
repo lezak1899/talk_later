@@ -67,11 +67,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             String msgText = dataContent.getChatMsg().getMsg();
             //将username和channel关联起来
             UserChannelRel.put(senderUsername,currentChannel);
-            // 测试
-//            for (Channel c : users) {
-//                System.out.println(c.id().asLongText());
-//            }
-//            UserChannelRel.output();
         }
         /**
          * 2、action为聊天，需要将发送者的消息存储到数据中，并且找到接收者的channel将消息推送出去
@@ -80,7 +75,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             String senderUsername = dataContent.getChatMsg().getSenderUsername();
             String recipientUsername = dataContent.getChatMsg().getRecipientUsername();
             String msgText = dataContent.getChatMsg().getMsg();
-//            String ReadedFlag  = dataContent.getChatMsg().getReadedFlag();
 
             //将数据写入数据库
             MsgXx msgXxResult = msgService.addMsg(senderUsername,recipientUsername,msgText,"2");
@@ -100,7 +94,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
          *3、action为签收信息
          */
         else if(actionType== MsgActionEnum.SIGNED.type){
-            //action为签收信息
 
             String msgIdsStr = dataContent.getExtand();
             String msgIds[] = msgIdsStr.split(",");

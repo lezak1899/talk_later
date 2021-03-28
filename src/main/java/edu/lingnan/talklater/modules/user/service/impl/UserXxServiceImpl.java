@@ -34,7 +34,6 @@ import java.util.Optional;
  * since JDK 1.8
  */
 @Transactional
-
 @Service
 public class UserXxServiceImpl implements UserXxService {
 
@@ -119,11 +118,7 @@ public class UserXxServiceImpl implements UserXxService {
         userXx.setCreatedDate(System.currentTimeMillis());
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
 
-        //获得roleId
-//        String roleId;
-//        if(userXx.getUsertype()=="1") roleId="02042156-7f26-11eb-bb75-00ffbd07b1ad";//普通用户Id
-//        else if(userXx.getUsertype()=="2") roleId="02d5677e-7f26-11eb-bb75-00ffbd07b1ad";//运维人员
-//        else roleId="f64e9b3f-7f25-11eb-bb75-00ffbd07b1ad";//系统管理员
+
 
         //绑定用户和角色
         StringBuffer sql = new StringBuffer();
@@ -133,7 +128,7 @@ public class UserXxServiceImpl implements UserXxService {
                 new Object[]{RoleDict.RoleDict(userXx.getUsertype()).getId(),returnUsesr.getId(),System.currentTimeMillis()},
                 new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});
 
-        //生成二维码文件流
+        //生成二维码文件流register
         qrCodeUtil.createQRCodeToOutputStream(byteArrayOutputStream,returnUsesr.getUsername());
         //将二维码文件流上传到服务器，将访问路径保存到数据库中
         String path= fileUtil.uploadOutputStream(returnUsesr.getId()+"_qrcode.png",byteArrayOutputStream);//上传到服务器
@@ -169,6 +164,11 @@ public class UserXxServiceImpl implements UserXxService {
                 newValue=userXx.getPassword();
                 if(StringUtil.isNullOrEmpty(newValue)) return false;
                 break;
+            case "signature" :
+                sql.append(" set fun_signature = ? ");
+                newValue=userXx.getFunSignature();
+                if(StringUtil.isNullOrEmpty(newValue)) return false;
+                break;
             default :
                 return false;
         }
@@ -198,10 +198,8 @@ public class UserXxServiceImpl implements UserXxService {
         //生成example
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
         Example<UserXx> example = Example.of(userXx, matcher);
-
         //分页，并且通过created_date字段进行降序排序
         PageRequest of = PageRequest.of(queryEntity.getPageNum()-1, queryEntity.getPageSize(), Sort.Direction.DESC, "createdDate");
-
         Page<UserXx> userXxPage = userXxRepository.findAll(example,of);
 
         return userXxPage;

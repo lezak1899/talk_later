@@ -13,12 +13,11 @@ spring:
     username: root
     password: 1234
 
-
   application:
     name: talk_later
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml #指定xml配置文件的位置
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml #指定xml配置文件的位置
 
 aliyun:
   oss:
@@ -26,7 +25,6 @@ aliyun:
     accessKeyId: "LTAI4GHHHS9YKUyvqcLRCYcE"
     accessKeySecret: "s3mPePeMcV4aU3SX1RvxHzI3ki4SsR"
     bucketName: "talk-later-file"
-
 
 qrcode:
   path: "qrCode/"
