@@ -24,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 
 import java.sql.Types;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -100,17 +101,37 @@ public class UserXxServiceImpl implements UserXxService {
     }
 
 
-
-
+    /**
+     * 注册校验
+     * 1、账号需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定8~10位
+     * 2、密码需要由字母或者数字组成，并且长度限定为6位
+     * 3、遍历数据库，判断是否和已存在的账户冲突
+     * @param userXx
+     * @return
+     */
     @Override
     public int register(UserXx userXx) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         if(userXx == null) return ReturnCode.PARAM_NULL.getCode();
 
+        //1、账号需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定为8位
+        String userAcountVerify  = "^[0-9A-Za-z]{8,10}$";
+        if(!userXx.getUsername().matches(userAcountVerify))
+            return ReturnCode.REGISTER_ACOUNT_ERROR.getCode();
+
+        //2、密码需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定为6位
+        String passwAcountVerify  = "^[0-9A-Za-z]{6,6}$";
+        if(!userXx.getPassword().matches(passwAcountVerify))
+            return ReturnCode.REGISTER_PASSWORD_ERROR.getCode();
+
+        //3、遍历数据库，判断是否和已存在的账户冲突
         UserXx verifyUserXx=new UserXx();
         verifyUserXx.setUsername(userXx.getUsername());
         if(isExist(verifyUserXx)) return ReturnCode.USERNAME_HAS_BEEN_USE.getCode();
+
+
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         //设置系统字段
         userXx.setUsertype(userXx.getUsertype());//1为普通用户，2为运维人员，3为系统管理员
@@ -134,9 +155,6 @@ public class UserXxServiceImpl implements UserXxService {
         String path= fileUtil.uploadOutputStream(returnUsesr.getId()+"_qrcode.png",byteArrayOutputStream);//上传到服务器
 
         String userId=returnUsesr.getId();
-
-//        StringBuffer sql=new StringBuffer(" update u_user_xx set qrcode = ? where id = ?");
-//        jdbcTemplate.update(sql.toString(),new Object[]{path,returnUsesr.getId()},new int[]{Types.VARCHAR,Types.VARCHAR});
 
         returnUsesr.setQrcode(path);
         userXxRepository.save(returnUsesr);
@@ -256,6 +274,16 @@ public class UserXxServiceImpl implements UserXxService {
         UserXx userXx= userXxRepository.findById(userId).get();
         UserXxResponseDTO userXxResponseDTO = UserXxMapper.userXxToUserXxResponseDTO(userXx);
         return userXxResponseDTO;
+    };
+
+
+    /**
+     * 多表关联分页查询测试
+     * @param pageable
+     * @return
+     */
+    public Page<Map<String,Object>> queryUserPageTest(Pageable pageable){
+        return userXxRepository.queryUserPageTest(pageable);
     };
 
 

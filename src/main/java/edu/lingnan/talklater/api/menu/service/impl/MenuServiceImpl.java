@@ -45,6 +45,7 @@ public class MenuServiceImpl implements MenuService {
      */
     public List<MenuTree> getMenuList(String userId){
 
+
         //最终返回的数据
         List<MenuTree> result;
 

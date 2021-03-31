@@ -12,8 +12,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -126,6 +130,16 @@ public class UserController {
     }
 
 
+
+    @RequestMapping(method = RequestMethod.POST, value = "/queryUserPageTest")
+    public ApiResponse queryUserPageTest(String pageNum,String pageSize){
+
+        Map res = new HashMap();
+
+        PageRequest of = PageRequest.of(Integer.parseInt(pageNum), Integer.parseInt(pageSize));
+        res.put("pageTest",userXxService.queryUserPageTest(of));
+        return ApiResponse.success(res);
+    }
 
 
 

@@ -6,8 +6,10 @@ import edu.lingnan.talklater.modules.user.domain.UserXx;
 import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description:
@@ -95,5 +97,12 @@ public interface UserXxService {
      * 查询用户信息接口
      */
     public UserXxResponseDTO checkUserInfo(String userId);
+
+    /**
+     * 多表关联分页查询测试
+     * @param pageable
+     * @return
+     */
+    public Page<Map<String,Object>>  queryUserPageTest(Pageable pageable);
 
 }

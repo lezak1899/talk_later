@@ -9,7 +9,6 @@ package edu.lingnan.talklater.request;
  */
 public class QueryEntity {
 
-
     /**
      * 当前查询页下表
      */

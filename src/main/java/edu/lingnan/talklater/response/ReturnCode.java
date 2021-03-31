@@ -72,14 +72,20 @@ public enum ReturnCode {
     /**
      * 密码错误！
      */
-    USER_PASSWOED_ERROR(12, "密码错误！");
+    USER_PASSWOED_ERROR(12, "密码错误！"),
+
+    /**
+     * 账号需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定8~10位
+     */
+    REGISTER_ACOUNT_ERROR(13, "账号需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定8~10位"),
+
+    /**
+     * 密码需要由字母或者数字组成，并且长度限定为6位
+     */
+    REGISTER_PASSWORD_ERROR(14, "密码需要由字母或者数字组成，并且长度限定为6位");
 
 
-
-
-
-
-
+    
     private final Integer code;
     private final String msg;
 
@@ -125,6 +131,10 @@ public enum ReturnCode {
                 return "登录账号不存在！";
             case 12:
                 return "密码错误！";
+            case 13:
+                return "账号需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定8~10位";
+            case 14:
+                return "密码需要由字母或者数字组成，并且长度限定为6位";
             default:
                 return null;
         }
