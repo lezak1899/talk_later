@@ -59,9 +59,18 @@ public class FileUtil {
             // 关闭OSSClient。
             ossClient.shutdown();
         }
+        return qrCodePaht+fileName;//返回保存路径
+    }
+
+    public String uploadInputStream(String fileName, ByteArrayInputStream byteArrayInputStream){
+
+        // 创建OSSClient实例。
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        ossClient.putObject(bucketName,fileName, byteArrayInputStream);
+        ossClient.shutdown();
 
         return qrCodePaht+fileName;//返回保存路径
-
     }
 
 

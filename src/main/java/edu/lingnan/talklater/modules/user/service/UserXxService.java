@@ -3,6 +3,7 @@ package edu.lingnan.talklater.modules.user.service;
 
 import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.request.UserFaceImgRequestDto;
 import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
@@ -104,5 +105,12 @@ public interface UserXxService {
      * @return
      */
     public Page<Map<String,Object>>  queryUserPageTest(Pageable pageable);
+
+
+    /**
+     * 头像上传
+     * @return
+     */
+    public UserXx faceImgUpload(UserFaceImgRequestDto userFaceImgRequestDto);
 
 }

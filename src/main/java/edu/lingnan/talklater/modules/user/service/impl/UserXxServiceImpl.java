@@ -3,12 +3,14 @@ package edu.lingnan.talklater.modules.user.service.impl;
 import edu.lingnan.talklater.api.user.domain.request.UserQueryEntity;
 import edu.lingnan.talklater.modules.user.domain.RoleDict;
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.request.UserFaceImgRequestDto;
 import edu.lingnan.talklater.modules.user.domain.dto.response.UserXxResponseDTO;
 import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
 import edu.lingnan.talklater.modules.user.repository.UserXxRepository;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
 import edu.lingnan.talklater.request.QueryEntity;
 import edu.lingnan.talklater.response.ReturnCode;
+import edu.lingnan.talklater.utils.Base64Util;
 import edu.lingnan.talklater.utils.FileUtil;
 import edu.lingnan.talklater.utils.QRCodeUtil;
 import io.netty.util.internal.StringUtil;
@@ -17,12 +19,17 @@ import org.springframework.data.domain.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,8 +41,8 @@ import java.util.Optional;
  * version
  * since JDK 1.8
  */
-@Transactional
 @Service
+@Transactional
 public class UserXxServiceImpl implements UserXxService {
 
 
@@ -51,6 +58,8 @@ public class UserXxServiceImpl implements UserXxService {
     @Autowired
     private FileUtil fileUtil;
 
+    @Autowired
+    private Base64Util base64Util;
 
 
     @Override
@@ -285,6 +294,63 @@ public class UserXxServiceImpl implements UserXxService {
     public Page<Map<String,Object>> queryUserPageTest(Pageable pageable){
         return userXxRepository.queryUserPageTest(pageable);
     };
+
+
+
+
+    /**
+     * 头像上传
+     */
+    @Override
+    public UserXx faceImgUpload(UserFaceImgRequestDto userFaceImgRequestDto){
+        if(userFaceImgRequestDto==null) return null;
+        ByteArrayInputStream inputStreamFace450=null;
+        ByteArrayInputStream inputStreamFace80=null;
+
+        //
+        UserXx userXx = userXxRepository.findById(userFaceImgRequestDto.getUserId()).get();
+        String faceImgUrlStr = userXx.getFaceImg();
+        String suffix="";
+        int n= faceImgUrlStr.indexOf("_1.png");
+        if(n>=0){
+            suffix="_2.png";
+        }else{
+            suffix="_1.png";
+        }
+
+        //图片名称
+        String fileNameFace450 ="faceImg/450px/"+userFaceImgRequestDto.getUserId()+"_face_450"+suffix;
+        String fileNameFace80 ="faceImg/80px/"+userFaceImgRequestDto.getUserId()+"_face_80"+suffix;
+
+        //base64转字节流
+        try {
+            inputStreamFace450 = base64Util.base64ToIo(userFaceImgRequestDto.getFaceImgWhole());
+            inputStreamFace80 = base64Util.base64ToIo(userFaceImgRequestDto.getFaceImg());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        fileUtil.uploadInputStream(fileNameFace450,inputStreamFace450);
+        fileUtil.uploadInputStream(fileNameFace80,inputStreamFace80);
+
+        StringBuffer sql = new StringBuffer();
+        sql.append(" update u_user_xx set face_img_whole = ? , face_img = ? where id= ?");
+        jdbcTemplate.update(sql.toString(),
+                new Object[]{fileNameFace450,fileNameFace80,userFaceImgRequestDto.getUserId()},
+                new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR});
+
+
+        StringBuffer querySql= new StringBuffer();
+        querySql.append(" select * from u_user_xx where id = ? and is_valid= '1'");
+        List<UserXx> res = jdbcTemplate.query(querySql.toString(),
+                new Object[]{userFaceImgRequestDto.getUserId()},
+                new int[]{Types.VARCHAR},new BeanPropertyRowMapper(UserXx.class));
+
+        if(res ==null) return null;
+        return res.get(0);
+    };
+
 
 
 

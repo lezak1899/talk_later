@@ -2,6 +2,7 @@ package edu.lingnan.talklater.modules.user.controller;
 
 
 import edu.lingnan.talklater.modules.user.domain.UserXx;
+import edu.lingnan.talklater.modules.user.domain.dto.request.UserFaceImgRequestDto;
 import edu.lingnan.talklater.modules.user.domain.dto.request.UserXxRequestDTO;
 import edu.lingnan.talklater.modules.user.domain.mapper.UserXxMapper;
 import edu.lingnan.talklater.modules.user.service.UserXxService;
@@ -18,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -139,6 +142,29 @@ public class UserController {
         PageRequest of = PageRequest.of(Integer.parseInt(pageNum), Integer.parseInt(pageSize));
         res.put("pageTest",userXxService.queryUserPageTest(of));
         return ApiResponse.success(res);
+    }
+
+
+    /**
+     * 头像上传接口
+     */
+    @ApiOperation(value = "头像上传接口")
+    @ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "成功!"),
+    })
+    @RequestMapping(method = RequestMethod.POST, value = "/faceImg/upload")
+    public ApiResponse faceImgUpload(@RequestBody UserFaceImgRequestDto userFaceImgRequestDto){
+
+        if (userFaceImgRequestDto==null||StringUtil.isNullOrEmpty(userFaceImgRequestDto.getUserId()))
+            return ApiResponse.fail(ReturnCode.PARAM_NULL);
+
+        UserXx currentUser = userXxService.faceImgUpload(userFaceImgRequestDto);
+        if(currentUser==null) return ApiResponse.fail();
+
+        Map result = new HashMap();
+        result.put("currentUser",currentUser);
+
+        return ApiResponse.success(result);
     }
 
 
