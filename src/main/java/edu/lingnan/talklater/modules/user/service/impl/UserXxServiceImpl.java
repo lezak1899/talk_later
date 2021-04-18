@@ -145,6 +145,8 @@ public class UserXxServiceImpl implements UserXxService {
         //设置系统字段
         userXx.setUsertype(userXx.getUsertype());//1为普通用户，2为运维人员，3为系统管理员
         userXx.setValid("1");
+        userXx.setFaceImg("faceImg/80px/default_face_80.png");
+        userXx.setFaceImgWhole("faceImg/450px/default_face.png");
         userXx.setCreatedDate(System.currentTimeMillis());
         UserXx returnUsesr= userXxRepository.save(userXx);//将信息存入数据库中
 
@@ -166,6 +168,7 @@ public class UserXxServiceImpl implements UserXxService {
         String userId=returnUsesr.getId();
 
         returnUsesr.setQrcode(path);
+
         userXxRepository.save(returnUsesr);
 
         return ReturnCode.SUCCESS.getCode();
@@ -310,6 +313,7 @@ public class UserXxServiceImpl implements UserXxService {
         //
         UserXx userXx = userXxRepository.findById(userFaceImgRequestDto.getUserId()).get();
         String faceImgUrlStr = userXx.getFaceImg();
+        if(faceImgUrlStr==null) faceImgUrlStr="";
         String suffix="";
         int n= faceImgUrlStr.indexOf("_1.png");
         if(n>=0){
