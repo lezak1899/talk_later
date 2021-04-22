@@ -64,10 +64,10 @@ public class StatXx  implements Serializable {
     private java.math.BigDecimal targetRate;
 
     /**
-     * 统计任务执行时间
+     * 统计时间
      */
-    @Column(name = "excute_date")
-    private Date excuteDate;
+    @Column(name = "stat_date")
+    private Date statDate;
 
     /**
      * 周期
@@ -161,12 +161,12 @@ public class StatXx  implements Serializable {
         this.targetRate = targetRate;
     }
 
-    public Date getExcuteDate() {
-        return excuteDate;
+    public Date getStatDate() {
+        return statDate;
     }
 
-    public void setExcuteDate(Date excuteDate) {
-        this.excuteDate = excuteDate;
+    public void setStatDate(Date statDate) {
+        this.statDate = statDate;
     }
 
     public String getCycle() {

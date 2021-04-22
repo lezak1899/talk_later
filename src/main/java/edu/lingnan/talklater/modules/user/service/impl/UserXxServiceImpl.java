@@ -21,6 +21,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 
 import java.io.ByteArrayInputStream;
@@ -353,6 +354,25 @@ public class UserXxServiceImpl implements UserXxService {
 
         if(res ==null) return null;
         return res.get(0);
+    };
+
+    /**
+     * 校验当前登录用户对应的角色是否被禁用
+     * @return
+     */
+    @Override
+    public Boolean checkRoleValid(String userId){
+        StringBuffer sql = new StringBuffer();
+        sql.append(" select urx.is_valid from");
+        sql.append(" (select id,user_id,role_id  from u_user_role  where user_id = ?) uur");
+        sql.append(" left join (select id,is_valid from u_role_xx )urx  on uur.role_id = urx.id");
+
+        Map<String,Object> res = jdbcTemplate.queryForMap(sql.toString(),new Object[]{userId},new int[]{Types.VARCHAR});
+        String isValid =  String.valueOf(res.get("is_valid"));
+        if (StringUtils.isEmpty(isValid)) return false;
+        if(isValid.equals("0")) return false;
+
+        return true;
     };
 
 

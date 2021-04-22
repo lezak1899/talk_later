@@ -50,7 +50,7 @@ public class StatServiceImpl implements StatService {
         Example<StatXx> example = Example.of(statXx, matcher);
 
         //分页，并且通过created_date字段进行降序排序
-        PageRequest of = PageRequest.of(queryEntity.getPageNum()-1, queryEntity.getPageSize(), Sort.Direction.DESC, "excuteDate");
+        PageRequest of = PageRequest.of(queryEntity.getPageNum()-1, queryEntity.getPageSize(), Sort.Direction.DESC, "statDate");
 
         Page<StatXx> statXxPage = statRepository.findAll(example,of);
 
@@ -64,10 +64,10 @@ public class StatServiceImpl implements StatService {
     public Map<String,Object> queryHeadStatData(){
         StringBuffer sql = new StringBuffer();
         sql.append(" select ");
-        sql.append(" (select total from s_stat_xx ssx  where `type` ='1' and name = '用户总量' order by excute_date desc limit 1) as yhzl,");
-        sql.append(" (select total from s_stat_xx ssx  where `type` ='2' order by excute_date desc limit 1) as rxxl,");
-        sql.append(" (select total from s_stat_xx ssx  where `type` ='3' order by excute_date desc limit 1) as rhyd,");
-        sql.append(" (select total from s_stat_xx ssx  where `type` ='4' order by excute_date desc limit 1) as ryhzz");
+        sql.append(" (select total from s_stat_xx ssx  where `type` ='1' and name = '用户总量' order by stat_date desc limit 1) as yhzl,");
+        sql.append(" (select total from s_stat_xx ssx  where `type` ='2' order by stat_date desc limit 1) as ryhzz,");
+        sql.append(" (select total from s_stat_xx ssx  where `type` ='3' order by stat_date desc limit 1) as rhyd,");
+        sql.append(" (select total from s_stat_xx ssx  where `type` ='4' order by stat_date desc limit 1) as rxxl");
         return jdbcTemplate.queryForMap(sql.toString());
     };
 
@@ -77,8 +77,8 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Map<String,Object>> queryYhzlData(){
         StringBuffer sql = new StringBuffer();
-        sql.append(" select total,date_format( excute_date , '%Y%m' ) as date  from s_stat_xx ssx ");
-        sql.append(" where `type` ='1' and name = '用户总量' order by excute_date desc limit 7");
+        sql.append(" select * from (select total,date_format( stat_date , '%Y-%m-%d' ) as date  from s_stat_xx ssx ");
+        sql.append(" where `type` ='1' and name = '用户总量' order by stat_date desc limit 7) tmp order by tmp.date asc ");
         return jdbcTemplate.queryForList(sql.toString());
 
     };
@@ -89,8 +89,8 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Map<String,Object>> queryRxxlData(){
         StringBuffer sql = new StringBuffer();
-        sql.append(" select total,date_format( excute_date , '%Y%m' ) as date  from s_stat_xx ssx ");
-        sql.append(" where `type` ='4'  order by excute_date desc limit 7");
+        sql.append(" select * from (select total,date_format( stat_date , '%Y-%m-%d' ) as date  from s_stat_xx ssx ");
+        sql.append(" where `type` ='4'  order by stat_date desc limit 7) tmp order by tmp.date asc ");
         return jdbcTemplate.queryForList(sql.toString());
     };
 
@@ -100,8 +100,8 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Map<String,Object>> queryYhhydData(){
         StringBuffer sql = new StringBuffer();
-        sql.append(" select total,date_format( excute_date , '%Y%m' ) as date  from s_stat_xx ssx ");
-        sql.append(" where `type` ='2' order by excute_date desc limit 7");
+        sql.append(" select * from (select total,date_format( stat_date , '%Y-%m-%d' ) as date  from s_stat_xx ssx ");
+        sql.append(" where `type` ='2' order by stat_date desc limit 7) tmp order by tmp.date asc ");
         return jdbcTemplate.queryForList(sql.toString());
     };
 
@@ -111,8 +111,8 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Map<String,Object>> queryRzzData(){
         StringBuffer sql = new StringBuffer();
-        sql.append(" select total,date_format( excute_date , '%Y%m' ) as date  from s_stat_xx ssx ");
-        sql.append(" where `type` ='2'  order by excute_date desc limit 7");
+        sql.append(" select * from (select total,date_format( stat_date , '%Y-%m-%d' ) as date  from s_stat_xx ssx ");
+        sql.append(" where `type` ='2'  order by stat_date desc limit 7) tmp order by tmp.date asc ");
         return jdbcTemplate.queryForList(sql.toString());
     };
 
@@ -123,7 +123,7 @@ public class StatServiceImpl implements StatService {
         StringBuffer sql = new StringBuffer();
         sql.append(" select total as 'value', name as 'name' from s_stat_xx ssx ");
         sql.append(" where name in('女用户总量','男用户总量') ");
-        sql.append(" and `type` ='1' order by excute_date desc limit 2");
+        sql.append(" and `type` ='1' order by stat_date desc limit 2");
         return jdbcTemplate.queryForList(sql.toString());
 
     };

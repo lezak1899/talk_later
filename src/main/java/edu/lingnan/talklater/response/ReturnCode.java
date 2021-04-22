@@ -82,7 +82,15 @@ public enum ReturnCode {
     /**
      * 密码需要由字母或者数字组成，并且长度限定为6位
      */
-    REGISTER_PASSWORD_ERROR(14, "密码需要由字母或者数字组成，并且长度限定为6位");
+    REGISTER_PASSWORD_ERROR(14, "密码需要由字母或者数字组成，并且长度限定为6位"),
+    /**
+     * 权限不足
+     */
+    PERMISSION_DENY(15,"权限不足"),
+    /**
+     * 该角色已经被禁用
+     */
+    ROLE_FORBIDDEN(15,"该角色已经被禁用");
 
 
     
@@ -135,6 +143,10 @@ public enum ReturnCode {
                 return "账号需要由字母或者数字组成，并且不能是纯数字，或者纯字母，并且长度限定8~10位";
             case 14:
                 return "密码需要由字母或者数字组成，并且长度限定为6位";
+            case 15:
+                return "权限不足";
+            case 16:
+                return "该角色已经被禁用";
             default:
                 return null;
         }

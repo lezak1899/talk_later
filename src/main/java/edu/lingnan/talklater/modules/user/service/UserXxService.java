@@ -113,4 +113,10 @@ public interface UserXxService {
      */
     public UserXx faceImgUpload(UserFaceImgRequestDto userFaceImgRequestDto);
 
+    /**
+     * 校验当前登录用户对应的角色是否被禁用
+     * @return
+     */
+    public Boolean checkRoleValid(String userId);
+
 }

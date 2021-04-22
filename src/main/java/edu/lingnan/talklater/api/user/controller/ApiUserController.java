@@ -65,15 +65,21 @@ public class ApiUserController {
         userXx.setPassword(password);
         userXx.setLastLoginEquipment(lastLoginEquipment);
         currentUser= userXxService.login(userXx);
+
+        //密码校验
         if(currentUser==null) return ApiResponse.fail(ReturnCode.USER_PASSWOED_ERROR.getCode(),ReturnCode.USER_PASSWOED_ERROR.getMsg());
         result.put("currentUser",currentUser);
+
+        //权限校验，如果用户类型为1的不能登录
+        if(currentUser.getUsertype().equals("1")) return ApiResponse.fail(ReturnCode.PERMISSION_DENY);
+
+        //如果用户对应的角色被禁用，提示不可登录
+        if(!userXxService.checkRoleValid(currentUser.getId())) return ApiResponse.fail(ReturnCode.ROLE_FORBIDDEN);
 
         //session缓存登录对象
         session.setAttribute("currentUser",currentUser);
         session.setMaxInactiveInterval(60*15);//15分钟没有请求，就会过期
-
         System.out.println("登录：：："+session.getAttribute("currentUser").toString());
-
         return ApiResponse.success(result);
     }
 
