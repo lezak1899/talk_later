@@ -107,8 +107,8 @@ public class JobServiceImpl implements JobService {
 
         StringBuffer sql = new StringBuffer();
         sql.append(" select count(1) as sum from u_user_xx uux where is_valid ='1' ");
-        sql.append(" and to_days( now() )-to_days(date_format( FROM_UNIXTIME(created_date /1000,'%Y-%m-%d %H:%i:%s'), '%Y%m%d')) =1");
-        sql.append(" and usertype ='1';");
+        sql.append(" and to_days( now() )-to_days(date_format( FROM_UNIXTIME(last_login_date/1000,'%Y-%m-%d %H:%i:%s'), '%Y%m%d')) =1");
+        sql.append(" and usertype ='1'");
         Map<String,Object> res = jdbcTemplate.queryForMap(sql.toString());
         int sum =Integer.parseInt(String.valueOf(res.get("sum")));
 

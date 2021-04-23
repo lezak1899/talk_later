@@ -59,12 +59,25 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 
         /**
          * 依据不同的actionType，执行相应的逻辑
-         * 1、action为初次连接
+         * 1、action为初次连接，建立连接前需要做“重复登录”校验
          */
         if(actionType== MsgActionEnum.CONNECT.type){
             String senderUsername = dataContent.getChatMsg().getSenderUsername();
             String recipientUsername = dataContent.getChatMsg().getRecipientUsername();
             String msgText = dataContent.getChatMsg().getMsg();
+
+            //校验当前账号是否已经登录在其他设备，
+            Channel recipientChannel= UserChannelRel.get(dataContent.getChatMsg().getSenderUsername());
+            if (recipientChannel!=null){
+                Channel findChannel = users.find(recipientChannel.id());
+                if (findChannel!=null){
+                    dataContent.setAction(MsgActionEnum.REPEAT_LOGIN.type);
+                    findChannel.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(dataContent)));
+                    findChannel.close();
+                }
+            }
+
+
             //将username和channel关联起来
             UserChannelRel.put(senderUsername,currentChannel);
         }
@@ -119,6 +132,22 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
          *5、action为拉取好友
          */
         else if(actionType== MsgActionEnum.PULL_FRIEND.type){
+
+        }
+        /**
+         *6、重复登录校验
+         */
+        else if(actionType==MsgActionEnum.REPEAT_LOGIN.type){
+            System.out.println("111");
+
+            //获得其他设备登录的账号信息，如果在线，将dataContent返回回去
+            Channel recipientChannel= UserChannelRel.get(dataContent.getChatMsg().getSenderUsername());
+                if (recipientChannel!=null){
+                    Channel findChannel = users.find(recipientChannel.id());
+                    if (findChannel!=null){
+                        findChannel.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(dataContent)));//如果对方在线就直接推送消息
+                    }
+                }
 
         }
 

@@ -65,8 +65,8 @@ public class StatServiceImpl implements StatService {
         StringBuffer sql = new StringBuffer();
         sql.append(" select ");
         sql.append(" (select total from s_stat_xx ssx  where `type` ='1' and name = '用户总量' order by stat_date desc limit 1) as yhzl,");
-        sql.append(" (select total from s_stat_xx ssx  where `type` ='2' order by stat_date desc limit 1) as ryhzz,");
-        sql.append(" (select total from s_stat_xx ssx  where `type` ='3' order by stat_date desc limit 1) as rhyd,");
+        sql.append(" (select total from s_stat_xx ssx  where `type` ='3' order by stat_date desc limit 1) as ryhzz,");
+        sql.append(" (select total from s_stat_xx ssx  where `type` ='2' order by stat_date desc limit 1) as rhyd,");
         sql.append(" (select total from s_stat_xx ssx  where `type` ='4' order by stat_date desc limit 1) as rxxl");
         return jdbcTemplate.queryForMap(sql.toString());
     };
@@ -112,7 +112,7 @@ public class StatServiceImpl implements StatService {
     public List<Map<String,Object>> queryRzzData(){
         StringBuffer sql = new StringBuffer();
         sql.append(" select * from (select total,date_format( stat_date , '%Y-%m-%d' ) as date  from s_stat_xx ssx ");
-        sql.append(" where `type` ='2'  order by stat_date desc limit 7) tmp order by tmp.date asc ");
+        sql.append(" where `type` ='3'  order by stat_date desc limit 7) tmp order by tmp.date asc ");
         return jdbcTemplate.queryForList(sql.toString());
     };
 

@@ -66,6 +66,10 @@ public class UserController {
         userXx.setLastLoginEquipment(lastLoginEquipment);
         currentUser= userXxService.login(userXx);
         if(currentUser==null) return ApiResponse.fail(ReturnCode.USER_PASSWOED_ERROR.getCode(),ReturnCode.USER_PASSWOED_ERROR.getMsg());
+
+        //如果不是app端的用户，拒绝登录
+        if(!currentUser.getUsertype().equals("1")) return ApiResponse.fail(ReturnCode.PERMISSION_DENY);
+
         //如果用户对应的角色被禁用，提示不可登录
         if(!userXxService.checkRoleValid(currentUser.getId())) return ApiResponse.fail(ReturnCode.ROLE_FORBIDDEN);
 
