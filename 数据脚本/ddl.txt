@@ -1,0 +1,181 @@
+create DATABASE `talk_later` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+-- talk_later.s_stat_xx definition
+
+CREATE TABLE `s_stat_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `type` varchar(4) DEFAULT NULL COMMENT '统计类型',
+  `name` varchar(200) DEFAULT NULL COMMENT '统计名称',
+  `total` int(11) DEFAULT NULL COMMENT '数据总量',
+  `target_num` int(11) DEFAULT NULL COMMENT '目标总量',
+  `other_num` int(11) DEFAULT NULL COMMENT '剩余总量',
+  `target_rate` decimal(6,2) DEFAULT NULL COMMENT '目标比例',
+  `stat_date` date DEFAULT NULL COMMENT '统计任务执行时间',
+  `cycle` varchar(100) DEFAULT NULL COMMENT '周期',
+  `bz` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL,
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='统计信息表';
+
+-- talk_later.s_task_xx definition
+
+CREATE TABLE `s_task_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `type` varchar(2) DEFAULT NULL COMMENT '定时任务类型',
+  `name` varchar(50) DEFAULT NULL COMMENT '定时任务名称',
+  `status` varchar(2) DEFAULT NULL COMMENT '状态',
+  `cron` varchar(50) DEFAULT NULL COMMENT 'cron',
+  `last_excute_time` datetime DEFAULT NULL COMMENT '上一次执行时间',
+  `beanName` varchar(100) DEFAULT NULL COMMENT 'beanName',
+  `methodName` varchar(100) DEFAULT NULL COMMENT 'methodName',
+  `bz` varchar(500) DEFAULT NULL COMMENT '备注',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL,
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='定时任务配置表';
+
+-- talk_later.u_menu_xx definition
+
+CREATE TABLE `u_menu_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `f_id` varchar(50) DEFAULT NULL COMMENT '父级菜单id',
+  `name` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+  `url` varchar(100) DEFAULT NULL COMMENT '菜单地址',
+  `icon` varchar(50) DEFAULT NULL COMMENT '图标',
+  `order` int(11) DEFAULT NULL COMMENT '排序号',
+  `bz` varchar(500) DEFAULT NULL COMMENT '备注',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+
+-- talk_later.u_msg_xx definition
+
+CREATE TABLE `u_msg_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `sender_id` varchar(50) DEFAULT NULL COMMENT '发送方id',
+  `recipient_id` varchar(50) DEFAULT NULL COMMENT '接受方id',
+  `sender_username` varchar(50) DEFAULT NULL COMMENT '发送方用户名',
+  `recipient_username` varchar(50) DEFAULT NULL COMMENT '接受方用户名',
+  `msg` varchar(255) DEFAULT NULL COMMENT '消息正文',
+  `withdraw_flag` varchar(2) DEFAULT NULL COMMENT '撤回标志，1：已撤回；2：未撤回；',
+  `readed_flag` varchar(2) DEFAULT NULL COMMENT '已读标志，1：已读；2：未读；',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `index_sender_id` (`sender_id`),
+  KEY `index_recipient_id` (`recipient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息信息表';
+
+
+-- talk_later.u_request_xx definition
+
+CREATE TABLE `u_request_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `sender_id` varchar(50) DEFAULT NULL COMMENT '发送方id',
+  `sender_username` varchar(50) DEFAULT NULL COMMENT '发送方用户名',
+  `recipient_id` varchar(50) DEFAULT NULL COMMENT '接受方id',
+  `recipient_username` varchar(50) DEFAULT NULL COMMENT '接受方用户名',
+  `request_state` varchar(2) DEFAULT NULL COMMENT '请求验证状态，1：未处理；2：通过；3不通过；',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='好友请求信息表';
+
+-- talk_later.u_role_menu definition
+
+CREATE TABLE `u_role_menu` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `role_id` varchar(50) DEFAULT NULL COMMENT '角色id',
+  `menu_id` varchar(50) DEFAULT NULL COMMENT '菜单id',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+
+-- talk_later.u_role_xx definition
+
+CREATE TABLE `u_role_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `name` varchar(100) DEFAULT NULL COMMENT '角色名称',
+  `type` varchar(10) DEFAULT NULL COMMENT '角色类型',
+  `bz` varchar(500) DEFAULT NULL COMMENT '备注',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+
+-- talk_later.u_user_friend_ref definition
+
+CREATE TABLE `u_user_friend_ref` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `user_id` varchar(50) DEFAULT NULL COMMENT '用户id',
+  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `friend_id` varchar(50) DEFAULT NULL COMMENT '好友id',
+  `friend_username` varchar(50) DEFAULT NULL COMMENT '好友用户名',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`),
+  KEY `index_user_id` (`user_id`),
+  KEY `index_friend_id` (`friend_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=' 好友关联表';
+
+-- talk_later.u_user_role definition
+
+CREATE TABLE `u_user_role` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `role_id` varchar(50) DEFAULT NULL COMMENT '角色id',
+  `user_id` varchar(50) DEFAULT NULL COMMENT '用户id',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL COMMENT '创建时间',
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表';
+
+-- talk_later.u_user_xx definition
+
+CREATE TABLE `u_user_xx` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `usertype` varchar(2) DEFAULT NULL COMMENT '用户类型，1： 普通用户；2：管理员',
+  `username` varchar(50) DEFAULT NULL COMMENT '用户名称，用于登陆',
+  `sex` varchar(2) DEFAULT NULL COMMENT '性别',
+  `password` varchar(50) DEFAULT NULL COMMENT '密码',
+  `phone` varchar(11) DEFAULT NULL COMMENT '手机号码',
+  `face_img` varchar(1000) DEFAULT NULL COMMENT '头像预览图',
+  `face_img_whole` varchar(1000) DEFAULT NULL COMMENT '头像像完整图',
+  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `qrcode` varchar(500) DEFAULT NULL COMMENT '二维码',
+  `plus_id` varchar(255) DEFAULT NULL COMMENT '设备id',
+  `fun_signature` varchar(255) DEFAULT NULL COMMENT '个性签名',
+  `last_login_date` decimal(13,0) DEFAULT NULL COMMENT '上一次登录时间',
+  `last_login_location` varchar(50) DEFAULT NULL COMMENT '上一次登录地点',
+  `last_login_equipment` varchar(255) DEFAULT NULL COMMENT '上一次登录设备信息',
+  `is_valid` varchar(2) DEFAULT '1' COMMENT '是否有效，字典(0否；1是)，缺省值为1',
+  `created_date` decimal(13,0) DEFAULT NULL,
+  `modified_date` decimal(13,0) DEFAULT NULL COMMENT '最后修改时间',
+  `deleted_date` decimal(13,0) DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`),
+  KEY `index_username` (`username`),
+  KEY `index_phone` (`phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
+
+
+
+

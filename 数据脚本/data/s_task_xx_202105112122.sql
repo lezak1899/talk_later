@@ -1,0 +1,5 @@
+INSERT INTO talk_later.s_task_xx (id,`type`,name,status,cron,last_excute_time,beanName,methodName,bz,is_valid,created_date,modified_date,deleted_date) VALUES
+	 ('189c4f4a-8620-11eb-a237-00ffbd07b1ad','1','用户总量统计','1','0 5 0 * * ?','2021-04-24 00:05:00.0','taskSchedulingConfig','StatUserNum','0 5 0 * * ?','1',NULL,NULL,NULL),
+	 ('37b97330-8632-11eb-a237-00ffbd07b1ad','2','日活跃度统计','1','0 6 0 * * ?','2021-04-24 00:06:00.0','taskSchedulingConfig','StatActiveUserRate','0 6 0 * * ?','1',NULL,NULL,NULL),
+	 ('3935b5e2-8632-11eb-a237-00ffbd07b1ad','3','日用户增长量','1','0 7 0 * * ?','2021-04-24 00:07:00.0','taskSchedulingConfig','StatRegisterUserNum','0 7 0 * * ?','1',NULL,NULL,NULL),
+	 ('3af80bdb-8632-11eb-a237-00ffbd07b1ad','4','日信息量','1','0 8 0 * * ?','2021-04-24 00:08:00.0','taskSchedulingConfig','statMsgNum','0 8 0 * * ?','1',NULL,NULL,NULL);
