@@ -16,7 +16,7 @@ The project encompasses three main components: the development of the APP client
 
 ####  2.1 The technology overview of this system is shown as below:
 
-
+![输入图片说明](readme/%E5%9B%BE%E7%89%87.png)
 
 #### 2.2 Backend Development Technologies:
 
@@ -40,14 +40,22 @@ The project encompasses three main components: the development of the APP client
 
 ​	The chat system provides two user platforms: one is the user-side app, and the other is the web-based administration portal. Users need to install the Chat app on their mobile devices to use the user-side platform, while the administration portal can be accessed through a web browser on a computer. The overall system design is minimalistic, visually appealing, and user-friendly. 
 
-![image-20230813150027715](C:\Users\likunzhu\AppData\Roaming\Typora\typora-user-images\image-20230813150027715.png)
-
-![image-20230813150035893](C:\Users\likunzhu\AppData\Roaming\Typora\typora-user-images\image-20230813150035893.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%872.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%873.png)
 
  	The system architecture is as shown in the diagram. The Chat app on the client-side directly interacts with the web server over the network and facilitates data exchange with the database. On the web-based administration portal, the browser requests the frontend project of the management interface, which then sends the data to the backend. The backend processes the data and saves it to the database. 
 
 #### 4  The Database Design of the System 
 
-![image-20230813150128822](C:\Users\likunzhu\AppData\Roaming\Typora\typora-user-images\image-20230813150128822.png)
-
+![输入图片说明](readme/%E5%9B%BE%E7%89%874.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%875.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%876.png)
 #### 5 Some Screenshots of the System 
+![输入图片说明](readme/%E5%9B%BE%E7%89%877.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%878.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%879.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%8710.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%8711.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%8712.png)
+![输入图片说明](readme/13%E5%9B%BE%E7%89%87.png)
+![输入图片说明](readme/%E5%9B%BE%E7%89%8714.png)
