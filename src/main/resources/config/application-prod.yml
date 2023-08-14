@@ -7,10 +7,10 @@ netty:
   port: 8089
 spring:
   datasource:
-    url: jdbc:mysql://47.106.228.148:3306/talk_later?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: guest
-    password: 1234
+    url: 
+    driverClassName: 
+    username: 
+    password: 
 
   application:
     name: talk_later
