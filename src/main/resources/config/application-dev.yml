@@ -21,10 +21,10 @@ spring:
 
 aliyun:
   oss:
-    endpoint: "oss-cn-guangzhou.aliyuncs.com"
-    accessKeyId: "LTAI4GHHHS9YKUyvqcLRCYcE"
-    accessKeySecret: "s3mPePeMcV4aU3SX1RvxHzI3ki4SsR"
-    bucketName: "talk-later-file"
+    endpoint: ""
+    accessKeyId: ""
+    accessKeySecret: ""
+    bucketName: ""
 
 qrcode:
   path: "qrCode/"
