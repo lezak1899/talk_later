@@ -15,7 +15,7 @@ The project encompasses three main components: the development of the APP client
 ### 2、 Introduction to System Development Tools and Technologies 
 
 ####  2.1 The technology overview of this system is shown as below:
-
+![输入图片说明](https://gitee.com/likunzhu/talk_later/raw/master/readme/%E5%9B%BE%E7%89%87.png)
 ![输入图片说明](readme/%E5%9B%BE%E7%89%87.png)
 
 #### 2.2 Backend Development Technologies:
@@ -40,7 +40,7 @@ The project encompasses three main components: the development of the APP client
 
 ​	The chat system provides two user platforms: one is the user-side app, and the other is the web-based administration portal. Users need to install the Chat app on their mobile devices to use the user-side platform, while the administration portal can be accessed through a web browser on a computer. The overall system design is minimalistic, visually appealing, and user-friendly. 
 
-https://gitee.com/likunzhu/talk_later/raw/master/readme/%E5%9B%BE%E7%89%87.png
+
 ![输入图片说明](readme/%E5%9B%BE%E7%89%872.png)
 ![输入图片说明](readme/%E5%9B%BE%E7%89%873.png)
 
